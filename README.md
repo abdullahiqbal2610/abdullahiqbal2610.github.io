@@ -32,10 +32,10 @@ I’m Abdullah Iqbal, a Computer Science student at FAST-NUCES Lahore with a dee
 
 ## 🛠️ Tech Stack
 
-- HTML5 + CSS3  
-- JavaScript (vanilla)  
-- ScrollReveal.js  
-- GitHub Pages for deployment  
+- HTML5 + CSS3
+- JavaScript (vanilla)
+- ScrollReveal.js
+- GitHub Pages for deployment
 - Google Fonts (Orbitron + Inter)
 
 ---
@@ -52,16 +52,14 @@ I’m Abdullah Iqbal, a Computer Science student at FAST-NUCES Lahore with a dee
 └── images/
 └── project images, profile photo
 
-
-
 ## 🧠 Projects Featured
 
-| Project       | Tech     | Description                              |
-|---------------|----------|------------------------------------------|
-| CineMAK       | Node.js + SQL Server | Full-stack movie reservation system |
-| FASTBOOK      | C++      | Facebook-style terminal app              |
-| Sudoku Game   | Assembly | Console Sudoku game with full logic     |
-| Solitaire Game| C++      | Full Klondike Solitaire implementation  |
+| Project        | Tech                 | Description                            |
+| -------------- | -------------------- | -------------------------------------- |
+| CineMAK        | Node.js + SQL Server | Full-stack movie reservation system    |
+| FASTBOOK       | C++                  | Facebook-style terminal app            |
+| Sudoku Game    | Assembly             | Console Sudoku game with full logic    |
+| Solitaire Game | C++                  | Full Klondike Solitaire implementation |
 
 Each project links directly to its GitHub repository.
 
