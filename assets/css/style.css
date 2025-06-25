@@ -1,0 +1,368 @@
+/*────────────────────────────────────────────────────────
+   Astro Theme: Cosmic Blacks & Nebula Gold/Purple
+────────────────────────────────────────────────────────*/
+:root {
+  --bg-start: #000014;
+  --bg-end: #0b001f;
+  --star-color: #ffffff;
+  --accent-primary: #8e44ad; /* nebula purple */
+  --accent-secondary: #f39c12; /* stardust gold */
+  --text-light: #ececec;
+
+  --font-heading: "Orbitron", sans-serif;
+  --font-body: "Inter", sans-serif;
+
+  --radius: 8px;
+  --spacing: 1.5rem;
+  --transition: 0.3s ease;
+  --max-width: 1200px;
+}
+
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+html {
+  scroll-behavior: smooth;
+}
+body {
+  position: relative;
+  font-family: var(--font-body);
+  color: var(--text-light);
+  background: linear-gradient(180deg, var(--bg-start) 0%, var(--bg-end) 100%);
+  min-height: 100vh;
+  overflow-x: hidden;
+}
+
+/* Starfield layer */
+body::before {
+  content: "";
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: radial-gradient(var(--star-color) 1px, transparent 1px) 0 0/20px
+      20px,
+    radial-gradient(var(--star-color) 1px, transparent 1px) 10px 10px/20px 20px;
+  opacity: 0.1;
+  z-index: -1;
+  animation: starDrift 200s linear infinite;
+}
+@keyframes starDrift {
+  from {
+    background-position: 0 0, 10px 10px;
+  }
+  to {
+    background-position: -1000px 1000px, 1010px 1010px;
+  }
+}
+
+/*────────────────────────────────────────────────────────
+   Navbar
+────────────────────────────────────────────────────────*/
+.navbar {
+  position: sticky;
+  top: 0;
+  z-index: 100;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 1rem 2rem;
+  background: rgba(0, 0, 0, 0.6);
+}
+.logo {
+  font-family: var(--font-heading);
+  font-size: 2rem;
+  background: linear-gradient(
+    90deg,
+    var(--accent-primary),
+    var(--accent-secondary)
+  );
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  letter-spacing: 2px;
+}
+.nav-links {
+  list-style: none;
+  display: flex;
+  gap: 1.5rem;
+}
+.nav-links a {
+  color: var(--text-light);
+  padding: 0.5rem 0.75rem;
+  border-radius: var(--radius);
+  transition: background var(--transition);
+}
+.nav-links a:hover,
+.nav-links a.active {
+  background: rgba(255, 255, 255, 0.1);
+}
+.mobile-nav-toggle {
+  display: none;
+  background: none;
+  border: none;
+  font-size: 1.6rem;
+  color: var(--text-light);
+}
+@media (max-width: 768px) {
+  .nav-links {
+    display: none;
+    flex-direction: column;
+    background: rgba(0, 0, 0, 0.9);
+    position: absolute;
+    top: 100%;
+    right: 0;
+    width: 200px;
+  }
+  .nav-links.show {
+    display: flex;
+  }
+  .mobile-nav-toggle {
+    display: block;
+  }
+}
+
+/*────────────────────────────────────────────────────────
+   Hero (Typewriter + Glow)
+────────────────────────────────────────────────────────*/
+.hero {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  height: 80vh;
+  text-align: center;
+  padding: 0 1rem;
+}
+.hero-content h1 {
+  font-family: var(--font-heading);
+  font-size: 3rem;
+  margin-bottom: 1rem;
+  color: var(--accent-primary);
+  text-shadow: 0 0 8px var(--accent-primary);
+}
+.hero-content p {
+  font-size: 1.2rem;
+  margin-bottom: var(--spacing);
+}
+.btn {
+  display: inline-block;
+  font-family: var(--font-body);
+  background: var(--accent-secondary);
+  color: #000;
+  padding: 0.75rem 1.5rem;
+  border-radius: var(--radius);
+  position: relative;
+  overflow: hidden;
+  transition: background var(--transition);
+}
+.btn:hover {
+  background: var(--accent-primary);
+  /* Solar-flare burst */
+}
+#typewriter {
+  border-right: 2px solid var(--accent-primary);
+  padding-right: 5px;
+  white-space: nowrap;
+  overflow: hidden;
+}
+
+/*────────────────────────────────────────────────────────
+   Section Titles (Nebula Gradient)
+────────────────────────────────────────────────────────*/
+.section-title {
+  font-family: var(--font-heading);
+  font-size: 2.5rem;
+  margin: 3rem 0 1rem;
+  text-align: center;
+  background: linear-gradient(
+    90deg,
+    var(--accent-primary),
+    var(--accent-secondary)
+  );
+  background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-size: 200%;
+  animation: titleGradient 4s ease infinite;
+}
+@keyframes titleGradient {
+  0% {
+    background-position: 0%;
+  }
+  50% {
+    background-position: 100%;
+  }
+  100% {
+    background-position: 0%;
+  }
+}
+
+/*────────────────────────────────────────────────────────
+   About & Timeline
+────────────────────────────────────────────────────────*/
+.about-section {
+  padding-top: 6rem; /* ensure no overlap */
+  max-width: var(--max-width);
+  margin: auto;
+  display: flex;
+  gap: 2rem;
+  flex-wrap: wrap;
+  align-items: flex-start;
+}
+.profile-ring {
+  width: 250px;
+  height: 250px;
+  border-radius: 50%;
+  overflow: hidden;
+  transition: transform var(--transition);
+}
+.profile-ring img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+.profile-ring:hover {
+  transform: scale(1.05);
+}
+
+/* Timeline connector */
+.timeline {
+  position: relative;
+  margin-top: 2rem;
+  padding-left: 2rem;
+}
+.timeline::before {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: 10px;
+  width: 4px;
+  height: 100%;
+  background: var(--accent-secondary);
+  transform: scaleY(0);
+  transform-origin: top;
+  animation: drawLine 1s forwards 0.5s;
+}
+@keyframes drawLine {
+  to {
+    transform: scaleY(1);
+  }
+}
+.timeline-item {
+  display: flex;
+  align-items: flex-start;
+  margin-bottom: 1.5rem;
+}
+.timeline-marker {
+  width: 16px;
+  height: 16px;
+  border-radius: 50%;
+  background: var(--accent-primary);
+  margin-right: 1rem;
+  opacity: 0;
+  transform: scale(0);
+  animation: popMarker 0.6s forwards;
+}
+@keyframes popMarker {
+  to {
+    opacity: 1;
+    transform: scale(1);
+  }
+}
+.timeline-content h3 {
+  font-family: var(--font-heading);
+  font-size: 1.25rem;
+  margin-bottom: 0.25rem;
+}
+.timeline-content p {
+  font-size: 0.95rem;
+  line-height: 1.4;
+}
+
+/*────────────────────────────────────────────────────────
+   Projects (Always Visible + Hover-Lift)
+────────────────────────────────────────────────────────*/
+.projects-section {
+  max-width: var(--max-width);
+  margin: auto;
+  padding: 2rem 1rem;
+}
+.projects-grid {
+  display: grid;
+  gap: 2rem;
+  grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+}
+.project-card {
+  /* always visible */
+  opacity: 1 !important;
+  transform: none !important;
+  animation: fadeInUp 0.6s ease both;
+
+  background: rgba(5, 5, 20, 0.8);
+  backdrop-filter: blur(6px);
+  box-shadow: 0 12px 32px rgba(0, 0, 0, 0.8);
+  border-radius: var(--radius);
+  overflow: hidden;
+  transition: transform var(--transition), box-shadow var(--transition);
+}
+@keyframes fadeInUp {
+  from {
+    opacity: 0;
+    transform: translateY(20px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+.project-card:hover {
+  transform: translateY(-8px) scale(1.03);
+  box-shadow: 0 20px 48px rgba(0, 0, 0, 0.9);
+}
+.project-card img {
+  width: 100%;
+  height: 200px;
+  object-fit: cover;
+}
+.project-card h3 {
+  margin: 1rem;
+  color: var(--accent-primary);
+  font-family: var(--font-heading);
+}
+.project-card p {
+  margin: 0 1rem 1rem;
+  line-height: 1.4;
+}
+.project-card .btn {
+  margin: 0 1rem 1rem;
+}
+
+/*────────────────────────────────────────────────────────
+   Contact
+────────────────────────────────────────────────────────*/
+.contact-section {
+  max-width: var(--max-width);
+  margin: auto;
+  padding: 2rem 1rem;
+  text-align: center;
+}
+.contact-list {
+  list-style: none;
+  margin: 1rem 0;
+}
+.contact-list li {
+  margin-bottom: 0.75rem;
+}
+.contact-list a {
+  color: var(--accent-primary);
+}
+
+/*────────────────────────────────────────────────────────
+   Footer
+────────────────────────────────────────────────────────*/
+.site-footer {
+  text-align: center;
+  padding: 1.5rem;
+  font-size: 0.9rem;
+}
