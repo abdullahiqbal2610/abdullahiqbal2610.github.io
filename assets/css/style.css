@@ -31,6 +31,12 @@
 }
 
 /* HTML & Body */
+html,
+body {
+  width: 100%;
+  overflow-x: hidden;
+}
+
 html {
   scroll-behavior: smooth;
   scrollbar-color: var(--accent-primary) var(--secondary-bg);
@@ -44,7 +50,6 @@ body {
   color: var(--text-primary);
   background: var(--primary-bg);
   overflow-x: hidden;
-  max-width: 100%;
 }
 
 /* Background Animation */
@@ -97,8 +102,8 @@ body::before {
   justify-content: space-between;
   align-items: center;
   transition: all 0.3s ease;
-  max-width: 100%;
-  overflow-x: hidden;
+  width: 100%;
+  overflow: hidden;
 }
 
 .navbar.scrolled {
@@ -160,26 +165,6 @@ body::before {
 .nav-links a:hover::after,
 .nav-links a.active::after {
   width: 100%;
-}
-
-.mobile-nav-toggle {
-  display: none;
-  background: none;
-  border: none;
-  color: var(--text-primary);
-  font-size: 1.5rem;
-  cursor: pointer;
-  transition: all 0.3s ease;
-}
-
-.mobile-nav-toggle:hover {
-  color: var(--accent-primary);
-  text-shadow: var(--glow-primary);
-}
-
-.mobile-nav-toggle:focus {
-  outline: 2px solid var(--accent-primary);
-  outline-offset: 2px;
 }
 
 /* Hero Section */
@@ -809,40 +794,13 @@ body::before {
     padding: 0.5rem 1rem;
   }
 
-  .nav-links.hidden {
-    display: none;
-  }
-
   .nav-links {
-    position: fixed;
-    top: 60px;
-    left: 0;
-    right: 0;
-    background: rgba(0, 0, 0, 0.95);
-    backdrop-filter: blur(20px);
-    flex-direction: column;
-    padding: 1rem;
-    gap: 0.5rem;
-    max-height: 40vh;
-    overflow-y: auto;
-    transition: opacity 0.3s ease, visibility 0.3s ease;
-    opacity: 1;
-    visibility: visible;
-    border-bottom: 1px solid var(--border-color);
-  }
-
-  .nav-links.hidden {
-    opacity: 0;
-    visibility: hidden;
+    gap: 1rem;
   }
 
   .nav-links a {
-    font-size: 1rem;
-    padding: 0.75rem 0;
-  }
-
-  .mobile-nav-toggle {
-    display: block;
+    font-size: 0.9rem;
+    padding: 0.5rem 0;
   }
 
   .hero {
@@ -916,6 +874,14 @@ body::before {
     font-size: 1.3rem;
   }
 
+  .nav-links {
+    gap: 0.5rem;
+  }
+
+  .nav-links a {
+    font-size: 0.8rem;
+  }
+
   .hero-content h1 {
     font-size: 2rem;
   }
@@ -948,8 +914,7 @@ body::before {
 
 /* Print Styles */
 @media print {
-  .navbar,
-  .mobile-nav-toggle {
+  .navbar {
     display: none;
   }
 

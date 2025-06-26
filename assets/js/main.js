@@ -1,27 +1,4 @@
-// Mobile Navigation
-const toggle = document.getElementById("nav-toggle");
-const navLinks = document.getElementById("nav-menu");
-const navLinkItems = document.querySelectorAll(".nav-link");
-
-if (toggle && navLinks) {
-  toggle.addEventListener("click", () => {
-    navLinks.classList.toggle("hidden");
-  });
-}
-
-// Close mobile menu when clicking nav links
-navLinkItems.forEach((link) => {
-  link.addEventListener("click", () => {
-    navLinks.classList.add("hidden");
-  });
-});
-
-// Close mobile menu when clicking outside
-document.addEventListener("click", (e) => {
-  if (!navLinks.contains(e.target) && !toggle.contains(e.target)) {
-    navLinks.classList.add("hidden");
-  }
-});
+// Keep only these parts:
 
 // Navbar scroll effect
 window.addEventListener("scroll", () => {
