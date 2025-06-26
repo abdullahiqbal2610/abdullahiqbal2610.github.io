@@ -1,4 +1,21 @@
-/* Replace lines 14-18 in main.js and add nav link auto-close */
+/* Replace lines 7-13 in main.js */
+// Typewriter Effect
+const typeText = "Hello, I’m Abdullah Iqbal";
+let idx = 0;
+function typeWriter() {
+  if (idx < typeText.length) {
+    document.getElementById("typewriter").textContent += typeText.charAt(idx++);
+    setTimeout(typeWriter, 100);
+  } else {
+    setTimeout(() => {
+      document.getElementById("typewriter").textContent = "";
+      idx = 0;
+      typeWriter();
+    }, 1500); // 1.5s pause before restart
+  }
+}
+document.addEventListener("DOMContentLoaded", typeWriter);
+
 // Mobile nav toggle
 const toggle = document.getElementById("nav-toggle");
 const navLinks = document.getElementById("nav-menu");
@@ -14,17 +31,6 @@ navLinkItems.forEach((link) => {
     navLinks.classList.add("hidden");
   });
 });
-
-// Typewriter Effect
-const typeText = "Hello, I’m Abdullah Iqbal";
-let idx = 0;
-function typeWriter() {
-  if (idx < typeText.length) {
-    document.getElementById("typewriter").textContent += typeText.charAt(idx++);
-    setTimeout(typeWriter, 100);
-  }
-}
-document.addEventListener("DOMContentLoaded", typeWriter);
 
 // ScrollReveal setup (reset:true for replays)
 const sr = ScrollReveal({
