@@ -15,8 +15,8 @@
   --accent-secondary: #f0f0f0;
   --accent-tertiary: #e0e0e0;
   --text-primary: #ffffff;
- --text-secondary: #c0c0c0; /* Was #b0b0b0 */
---text-muted: #909090; /* Was #808080 */
+  --text-secondary: #c0c0c0; /* Was #b0b0b0 */
+  --text-muted: #909090; /* Was #808080 */
   --border-color: #2a2a2a;
   --border-light: #333333;
   --gradient-primary: linear-gradient(135deg, #ffffff, #e0e0e0);
@@ -39,7 +39,8 @@ html {
 
 /* Add to ensure body doesn’t overflow (near line 56) */
 body {
-  font-family: "Inter", -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+  font-family: "Inter", -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto,
+    sans-serif;
   line-height: 1.6;
   color: var(--text-primary);
   background: var(--primary-bg);
@@ -55,7 +56,11 @@ body::before {
   left: 0;
   width: 100%;
   height: 100%;
-  background: radial-gradient(circle at 50% 50%, rgba(255, 255, 255, 0.02) 0%, transparent 50%);
+  background: radial-gradient(
+    circle at 50% 50%,
+    rgba(255, 255, 255, 0.02) 0%,
+    transparent 50%
+  );
   pointer-events: none;
   z-index: -1;
 }
@@ -78,6 +83,8 @@ body::before {
   background: var(--accent-primary);
 }
 
+/* Update navbar styles (replace lines 94-166 and 614-655 in style.css) */
+
 /* Premium Navbar */
 .navbar {
   position: fixed;
@@ -88,11 +95,13 @@ body::before {
   background: rgba(0, 0, 0, 0.95);
   backdrop-filter: blur(20px);
   border-bottom: 1px solid var(--border-color);
-  padding: 1rem 2rem;
+  padding: 0.5rem 1rem; /* Reduced padding for mobile */
   display: flex;
   justify-content: space-between;
   align-items: center;
   transition: all 0.3s ease;
+  max-width: 100%; /* Prevent overflow */
+  overflow-x: hidden;
 }
 
 .navbar.scrolled {
@@ -113,7 +122,6 @@ body::before {
   text-shadow: var(--glow-primary);
 }
 
-/* Replace lines 133-138 */
 .logo:hover {
   transform: scale(1.1);
   filter: drop-shadow(0 0 10px rgba(255, 255, 255, 0.5));
@@ -167,7 +175,11 @@ body::before {
   transition: all 0.3s ease;
 }
 
-/* Add after line 166 */
+.mobile-nav-toggle:hover {
+  color: var(--accent-primary);
+  text-shadow: var(--glow-primary);
+}
+
 .mobile-nav-toggle:focus {
   outline: 2px solid var(--accent-primary);
   outline-offset: 2px;
@@ -205,7 +217,8 @@ body::before {
 }
 
 @keyframes pulse {
-  0%, 100% {
+  0%,
+  100% {
     transform: translate(-50%, -50%) scale(1);
     opacity: 0.6;
   }
@@ -215,11 +228,9 @@ body::before {
   }
 }
 
-
-
 .hero-content h1 {
   /* Replace line 248 */
-font-size: clamp(2rem, 6vw, 4rem);  
+  font-size: clamp(2rem, 6vw, 4rem);
   font-weight: 800;
   margin-bottom: 1rem;
   background: var(--gradient-primary);
@@ -743,10 +754,11 @@ font-size: clamp(2rem, 6vw, 4rem);
   color: var(--text-muted);
 }
 /* Replace lines 614-622 in style.css (inside @media (max-width: 768px)) */
+/* Responsive Design (replace lines 614-655) */
 @media (max-width: 768px) {
   .navbar {
-    padding: 0.5rem; /* Reduced padding */
-    max-width: 100%; /* Prevent overflow */
+    padding: 0.5rem;
+    max-width: 100%;
     overflow-x: hidden;
   }
 
@@ -756,16 +768,16 @@ font-size: clamp(2rem, 6vw, 4rem);
 
   .nav-links {
     position: fixed;
-    top: 60px; /* Adjusted to account for smaller navbar */
+    top: 60px;
     left: 0;
     right: 0;
-    max-width: 100%; /* Ensure no horizontal overflow */
+    max-width: 100%;
     background: rgba(0, 0, 0, 0.85); /* Semi-transparent */
-    backdrop-filter: blur(10px); /* Slightly reduced blur for performance */
+    backdrop-filter: blur(10px);
     flex-direction: column;
-    padding: 1rem; /* Reduced padding for compact size */
-    max-height: 50vh; /* Limit dropdown height */
-    overflow-y: auto; /* Scroll if content exceeds height */
+    padding: 1rem;
+    max-height: 40vh; /* Compact dropdown */
+    overflow-y: auto;
     transition: opacity 0.3s ease, visibility 0.3s ease;
     opacity: 1;
     visibility: visible;
@@ -778,7 +790,7 @@ font-size: clamp(2rem, 6vw, 4rem);
   }
 
   .nav-links a {
-    font-size: 1rem; /* Smaller font for compact menu */
+    font-size: 1rem;
     padding: 0.5rem 0;
   }
 
@@ -787,7 +799,7 @@ font-size: clamp(2rem, 6vw, 4rem);
   }
 
   .hero-content h1 {
-    font-size: 2.5rem;
+    font-size: 2rem; /* Adjusted for smaller screens */
   }
 
   .about-container {

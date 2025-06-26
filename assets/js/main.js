@@ -1,4 +1,20 @@
-/* Replace lines 7-13 in main.js */
+/* Replace entire main.js content */
+const toggle = document.getElementById("nav-toggle");
+const navLinks = document.getElementById("nav-menu");
+const navLinkItems = document.querySelectorAll(".nav-link");
+
+if (toggle && navLinks) {
+  toggle.addEventListener("click", () => {
+    navLinks.classList.toggle("hidden");
+  });
+}
+
+navLinkItems.forEach((link) => {
+  link.addEventListener("click", () => {
+    navLinks.classList.add("hidden");
+  });
+});
+
 // Typewriter Effect
 const typeText = "Hello, I’m Abdullah Iqbal";
 let idx = 0;
@@ -16,28 +32,12 @@ function typeWriter() {
 }
 document.addEventListener("DOMContentLoaded", typeWriter);
 
-// Mobile nav toggle
-const toggle = document.getElementById("nav-toggle");
-const navLinks = document.getElementById("nav-menu");
-const navLinkItems = document.querySelectorAll(".nav-link");
-
-toggle.addEventListener("click", () => {
-  navLinks.classList.toggle("hidden");
-});
-
-// Auto-close dropdown when a nav link is clicked
-navLinkItems.forEach((link) => {
-  link.addEventListener("click", () => {
-    navLinks.classList.add("hidden");
-  });
-});
-
-// ScrollReveal setup (reset:true for replays)
+// ScrollReveal setup
 const sr = ScrollReveal({
   distance: "40px",
   duration: 800,
   easing: "ease-out",
-  reset: true, // replay on every scroll
+  reset: true,
   mobile: true,
 });
 
