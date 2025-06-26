@@ -742,31 +742,34 @@ font-size: clamp(2rem, 6vw, 4rem);
   color: var(--text-muted);
 }
 
-/* Responsive Design */
 @media (max-width: 768px) {
   .navbar {
     padding: 1rem;
   }
 
-/* Replace lines 614-622 */
-.nav-links {
-  position: fixed;
-  top: 70px;
-  left: 0;
-  right: 0;
-  background: rgba(0, 0, 0, 0.98);
-  backdrop-filter: blur(20px);
-  flex-direction: column;
-  padding: 2rem;
-  transform: translateY(-100vh);
-  transition: transform 0.3s ease, opacity 0.3s ease;
-  opacity: 0;
-  border-bottom: 1px solid var(--border-color);
-}
-.nav-links.active {
-  transform: translateY(0);
-  opacity: 1;
-}
+  .nav-links.hidden {
+    display: none;
+  }
+
+  .nav-links {
+    position: fixed;
+    top: 70px;
+    left: 0;
+    right: 0;
+    background: rgba(0, 0, 0, 0.98);
+    backdrop-filter: blur(20px);
+    flex-direction: column;
+    padding: 2rem;
+    transition: opacity 0.3s ease, visibility 0.3s ease;
+    opacity: 1;
+    visibility: visible;
+    border-bottom: 1px solid var(--border-color);
+  }
+
+  .nav-links.hidden {
+    opacity: 0;
+    visibility: hidden;
+  }
 
   .mobile-nav-toggle {
     display: block;

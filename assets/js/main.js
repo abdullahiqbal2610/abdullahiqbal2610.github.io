@@ -1,3 +1,22 @@
+// // Typewriter Effect
+// const typeText = "Hello, I’m Abdullah Iqbal";
+// let idx = 0;
+// function typeWriter() {
+//   if (idx < typeText.length) {
+//     document.getElementById("typewriter").textContent += typeText.charAt(idx++);
+//     setTimeout(typeWriter, 100);
+//   }
+// }
+//document.addEventListener("DOMContentLoaded", typeWriter);
+
+// Mobile nav toggle
+// Mobile nav toggle
+const toggle = document.getElementById("nav-toggle");
+const navLinks = document.getElementById("nav-menu");
+toggle.addEventListener("click", () => {
+  navLinks.classList.toggle("hidden");
+});
+
 // Typewriter Effect
 const typeText = "Hello, I’m Abdullah Iqbal";
 let idx = 0;
@@ -8,13 +27,6 @@ function typeWriter() {
   }
 }
 document.addEventListener("DOMContentLoaded", typeWriter);
-
-// Mobile nav toggle
-const toggle = document.querySelector(".mobile-nav-toggle");
-const navLinks = document.querySelector(".nav-links");
-toggle.addEventListener("click", () => {
-  navLinks.classList.toggle("show");
-});
 
 // ScrollReveal setup (reset:true for replays)
 const sr = ScrollReveal({
