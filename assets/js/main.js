@@ -1,20 +1,18 @@
-// // Typewriter Effect
-// const typeText = "Hello, I’m Abdullah Iqbal";
-// let idx = 0;
-// function typeWriter() {
-//   if (idx < typeText.length) {
-//     document.getElementById("typewriter").textContent += typeText.charAt(idx++);
-//     setTimeout(typeWriter, 100);
-//   }
-// }
-//document.addEventListener("DOMContentLoaded", typeWriter);
-
-// Mobile nav toggle
+/* Replace lines 14-18 in main.js and add nav link auto-close */
 // Mobile nav toggle
 const toggle = document.getElementById("nav-toggle");
 const navLinks = document.getElementById("nav-menu");
+const navLinkItems = document.querySelectorAll(".nav-link");
+
 toggle.addEventListener("click", () => {
   navLinks.classList.toggle("hidden");
+});
+
+// Auto-close dropdown when a nav link is clicked
+navLinkItems.forEach((link) => {
+  link.addEventListener("click", () => {
+    navLinks.classList.add("hidden");
+  });
 });
 
 // Typewriter Effect
