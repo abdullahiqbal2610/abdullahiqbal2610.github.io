@@ -179,6 +179,23 @@ body::before {
   }
 }
 
+.highlight {
+  background: var(--gradient-primary);
+  -webkit-background-clip: text;
+  background-clip: text;
+  -webkit-text-fill-color: transparent;
+  font-weight: 600;
+  animation: pulse-opacity 2s infinite alternate;
+}
+@keyframes pulse-opacity {
+  from {
+    opacity: 0.9;
+  }
+  to {
+    opacity: 1;
+  }
+}
+
 /* Hero Section */
 .hero {
   min-height: 100vh;
@@ -189,6 +206,14 @@ body::before {
   padding: 2rem;
   position: relative;
   overflow: hidden;
+}
+
+.tagline {
+  font-size: 1.3rem;
+  line-height: 1.6;
+  color: var(--text-secondary);
+  max-width: 650px;
+  margin: 0 auto 1 rem;
 }
 
 .hero::before {

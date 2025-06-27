@@ -11,7 +11,7 @@ window.addEventListener("scroll", () => {
 });
 
 // Typewriter Effect
-const typeText = "Hello, I'm Abdullah Iqbal";
+const typeText = "Abdullah Iqbal";
 let idx = 0;
 function typeWriter() {
   if (idx < typeText.length) {
