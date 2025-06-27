@@ -22,7 +22,7 @@ function typeWriter() {
       document.getElementById("typewriter").textContent = "";
       idx = 0;
       typeWriter();
-    }, 1500);
+    }, 3000);
   }
 }
 document.addEventListener("DOMContentLoaded", typeWriter);
@@ -85,4 +85,3 @@ sr.reveal("#projects .project-card", { interval: 200, origin: "bottom" });
 sr.reveal("#contact h2", { origin: "left", delay: 500 });
 sr.reveal("#contact .contact-icons li", { interval: 150, origin: "left" });
 sr.reveal("#contact .btn", { scale: 0.8, delay: 900 });
-
