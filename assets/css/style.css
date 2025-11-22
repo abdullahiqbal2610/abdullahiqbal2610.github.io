@@ -1012,3 +1012,166 @@ body::before {
   border-radius: 50px;
   animation: grok-pulse 2s infinite 0.5s;
 }
+
+
+/* ==================== BOOT ANIMATION ==================== */
+.boot-screen {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: #000;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    z-index: 9999;
+    animation: fadeOut 0.5s ease 4.5s forwards;
+}
+
+.logo-container {
+    position: relative;
+    width: 400px;
+    height: 400px;
+    animation: brighten 1s ease 2s forwards;
+}
+
+/* Subtle white glow at lower right */
+.base-glow {
+    position: absolute;
+    bottom: 43%;
+    right: 40%;
+    width: 140px;
+    height: 140px;
+    background: radial-gradient(circle, 
+        rgba(255, 255, 255, 0.08) 0%,
+        rgba(255, 255, 255, 0.04) 40%,
+        transparent 70%);
+    filter: blur(20px);
+}
+
+.logo-svg {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    width: 300px;
+    height: 297px;
+}
+
+.logo-svg path {
+    fill: #FFFFFF;
+}
+
+.sweep-container {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    width: 300px;
+    height: 297px;
+    overflow: hidden;
+}
+
+/* Monochrome sweep gradient - white/gray tones */
+.sweep-gradient {
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    width: 100%;
+    height: 0;
+    background: linear-gradient(to top,
+        rgba(255, 255, 255, 0.6) 0%,
+        rgba(220, 220, 220, 0.45) 25%,
+        rgba(180, 180, 180, 0.3) 50%,
+        transparent 100%);
+    mix-blend-mode: screen;
+    animation: sweepUp 2s ease-in-out forwards;
+}
+
+.glow-layer {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    width: 300px;
+    height: 297px;
+    opacity: 0;
+    animation: glowPulse 1s ease 2s forwards;
+}
+
+/* White glow with subtle gray shadows */
+.glow-layer svg path {
+    fill: #FFFFFF;
+    filter: drop-shadow(0 0 8px rgba(255, 255, 255, 0.7))
+            drop-shadow(0 0 16px rgba(240, 240, 240, 0.5))
+            drop-shadow(0 0 28px rgba(200, 200, 200, 0.3));
+}
+
+/* White/silver flash effect */
+.blink-flash {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    width: 360px;
+    height: 360px;
+    background: radial-gradient(circle, 
+        rgba(255, 255, 255, 0.9) 0%,
+        rgba(240, 240, 240, 0.7) 20%,
+        rgba(220, 220, 220, 0.5) 40%,
+        rgba(180, 180, 180, 0.25) 60%,
+        transparent 75%);
+    opacity: 0;
+    animation: blinkEffect 0.65s ease 3s forwards;
+}
+
+/* Animations */
+@keyframes sweepUp {
+    0% { height: 0; }
+    100% { height: 100%; }
+}
+
+@keyframes glowPulse {
+    0% { opacity: 0; }
+    50% { opacity: 1; }
+    100% { opacity: 0.9; }
+}
+
+@keyframes blinkEffect {
+    0%, 100% { opacity: 0; }
+    18% { opacity: 1; }
+    38% { opacity: 0.12; }
+    58% { opacity: 0.92; }
+    78% { opacity: 0.08; }
+}
+
+@keyframes brighten {
+    0% { filter: brightness(1); }
+    50% { filter: brightness(1.4); }
+    100% { filter: brightness(1.25); }
+}
+
+@keyframes fadeOut {
+    to {
+        opacity: 0;
+        visibility: hidden;
+    }
+}
+
+/* Hide main content initially */
+body.loading nav,
+body.loading section,
+body.loading footer {
+    opacity: 0;
+}
+
+body nav,
+body section,
+body footer {
+    animation: fadeInContent 1s ease 4.5s forwards;
+}
+
+@keyframes fadeInContent {
+    to { opacity: 1; }
+}
