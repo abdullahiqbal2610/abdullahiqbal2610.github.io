@@ -92,3 +92,47 @@ window.addEventListener('load', function() {
         document.body.classList.remove('loading');
     }, 4500);
 });
+
+
+// ===================================
+// Show More Projects Functionality
+// ===================================
+document.addEventListener('DOMContentLoaded', function() {
+  const showMoreBtn = document.getElementById('show-more-btn');
+  const hiddenProjects = document.querySelectorAll('.hidden-project');
+  let isExpanded = false;
+
+  if (showMoreBtn && hiddenProjects.length > 0) {
+    showMoreBtn.addEventListener('click', function() {
+      isExpanded = !isExpanded;
+
+      if (isExpanded) {
+        // Show hidden projects with staggered animation
+        hiddenProjects.forEach((project, index) => {
+          setTimeout(() => {
+            project.classList.add('show');
+          }, index * 150); // 150ms delay between each project
+        });
+
+        // Update button text and icon
+        showMoreBtn.innerHTML = '<i class="fas fa-chevron-down"></i> Show Less Projects';
+        showMoreBtn.classList.add('rotated');
+      } else {
+        // Hide projects
+        hiddenProjects.forEach(project => {
+          project.classList.remove('show');
+        });
+
+        // Update button text and icon
+        showMoreBtn.innerHTML = '<i class="fas fa-chevron-down"></i> Show More Projects';
+        showMoreBtn.classList.remove('rotated');
+
+        // Smooth scroll back to projects section
+        document.getElementById('projects').scrollIntoView({ 
+          behavior: 'smooth', 
+          block: 'start' 
+        });
+      }
+    });
+  }
+});

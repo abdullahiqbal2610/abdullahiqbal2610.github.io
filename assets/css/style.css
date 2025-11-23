@@ -1175,3 +1175,42 @@ body footer {
 @keyframes fadeInContent {
     to { opacity: 1; }
 }
+
+
+
+/* ==================== SHOW MORE PROJECTS ==================== */
+.hidden-project {
+  display: none;
+  opacity: 0;
+  transform: translateY(20px);
+}
+
+.hidden-project.show {
+  display: block;
+  animation: fadeInProject 0.5s ease forwards;
+}
+
+@keyframes fadeInProject {
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.show-more-container {
+  text-align: center;
+  margin-top: 3rem;
+}
+
+#show-more-btn {
+  min-width: 200px;
+  transition: all 0.3s ease;
+}
+
+#show-more-btn i {
+  transition: transform 0.3s ease;
+}
+
+#show-more-btn.rotated i {
+  transform: rotate(180deg);
+}
