@@ -22,6 +22,40 @@
     <!-- ScrollReveal.js -->
     <script src="https://unpkg.com/scrollreveal"></script>
     <link rel="stylesheet" href="assets/css/style.css" />
+
+<style>
+  /* --- 1. Button Alignment Fix --- */
+  .project-card {
+    display: flex;
+    flex-direction: column;
+    height: 100%; /* Forces cards to fill the grid height */
+  }
+
+  .project-content {
+    display: flex;
+    flex-direction: column;
+    flex-grow: 1; /* Pushes content to fill space */
+    justify-content: space-between;
+  }
+
+  .project-content .btn {
+    margin-top: auto; /* Pushes button to the absolute bottom */
+    align-self: flex-start;
+  }
+
+  /* --- 2. Fix "Huge Gap" (ScrollReveal Conflict) --- */
+  /* This ensures hidden projects take ZERO space, ignoring ScrollReveal's inline styles */
+  .project-card.hidden-project:not(.show) {
+    display: none !important;
+  }
+
+  /* --- 3. Fix Layout When Revealed --- */
+  /* When shown, force them back to FLEX so the button alignment works */
+  .project-card.hidden-project.show {
+    display: flex !important; 
+    animation: fadeInProject 0.5s ease forwards;
+  }
+</style>
   </head>
   <body>
     <body class="loading">
@@ -363,24 +397,23 @@
       </div>
     </section>
 
-    <!-- PROJECTS -->
 <section id="projects" class="projects-section">
   <div class="section-container">
     <h2 class="section-title">Featured Projects</h2>
     <div class="projects-grid">
-      <!-- Project 1: ABX Browser -->
+      
       <div class="project-card">
         <div class="project-image">
           <img
-            src="assets/images/project-abx.png"
-            alt="Screenshot of ABX Browser Extension"
+            src="assets/images/project-abx-one.png"
+            alt="ABX-One Interface"
             style="width: 100%; height: 100%; object-fit: cover"
           />
         </div>
         <div class="project-content">
-          <h3>ABX Browser – Chrome Extension</h3>
+          <h3>ABX-One: Intelligent Command Center</h3>
           <p>
-            A fully customizable Chrome extension featuring dark UI, glassmorphism design, smart tabs, and integrated widgets for weather, sports, and finance with upcoming AI-powered features.
+            A J.A.R.V.I.S.-inspired Chrome extension featuring Gemini 2.5 voice activation, a 3D parallax starfield, and context-aware widgets for a fully immersive AI browser dashboard.
           </p>
           <a href="https://github.com/abdullahiqbal2610/abx_browser.git" target="_blank" class="btn">
             <i class="fab fa-github"></i>
@@ -389,40 +422,78 @@
         </div>
       </div>
 
-      <!-- Project 2: Likert Scoring System -->
       <div class="project-card">
         <div class="project-image">
           <img
-            src="assets/images/project-likert.png"
-            alt="Screenshot of Automated Likert Scoring System"
+            src="assets/images/project-abx-terminal.png"
+            alt="ABX-Terminal Interface"
             style="width: 100%; height: 100%; object-fit: cover"
           />
         </div>
         <div class="project-content">
-          <h3>Automated Likert Scoring System</h3>
+          <h3>ABX-Terminal</h3>
           <p>
-            An NLP model using DistilBERT and transfer learning to automatically assign Likert-scale scores for psychological survey responses, achieving over 80% accuracy with Streamlit deployment.
+            A hyper-advanced holographic terminal fusing raw shell power with context-aware Gemini AI, real-time hardware telemetry, and procedural audio effects.
           </p>
-          <a href="https://github.com/abdullahiqbal2610/Likert_Scorer.git" target="_blank" class="btn">
+          <a href="https://github.com/abdullahiqbal2610/abx-terminal.git" target="_blank" class="btn">
             <i class="fab fa-github"></i>
             View Repository
           </a>
         </div>
       </div>
 
-      <!-- Project 3: CineMAK -->
       <div class="project-card">
         <div class="project-image">
           <img
+            src="assets/images/project-abx-chat.png"
+            alt="ABX-Chat App"
+            style="width: 100%; height: 100%; object-fit: cover"
+          />
+        </div>
+        <div class="project-content">
+          <h3>ABX-Chat</h3>
+          <p>
+            A secure, real-time messaging engine built with React Native and Socket.io, featuring a cyberpunk aesthetic, live typing status, and binary media streaming.
+          </p>
+          <a href="https://github.com/abdullahiqbal2610/abx-chat.git" target="_blank" class="btn">
+            <i class="fab fa-github"></i>
+            View Repository
+          </a>
+        </div>
+      </div>
+
+      <div class="project-card hidden-project">
+        <div class="project-image">
+          <img
+            src="assets/images/project-code-architect.png"
+            alt="Code Architect"
+            style="width: 100%; height: 100%; object-fit: cover"
+          />
+        </div>
+        <div class="project-content">
+          <h3>Code Architect</h3>
+          <p>
+            An AI-powered "Ultimate Code Cleaner & Manager" designed to automatically refactor, optimize, and organize complex codebases.
+          </p>
+          <a href="https://github.com/abdullahiqbal2610/Code-Architect.git" target="_blank" class="btn">
+            <i class="fab fa-github"></i>
+            View Repository
+          </a>
+        </div>
+      </div>
+
+      <div class="project-card hidden-project">
+        <div class="project-image">
+          <img
             src="assets/images/project-cinemak.png"
-            alt="Screenshot of CineMAK app"
+            alt="CineMAK App"
             style="width: 100%; height: 100%; object-fit: cover"
           />
         </div>
         <div class="project-content">
           <h3>CineMAK – Movie Reservation App</h3>
           <p>
-            A full-stack MERN movie reservation system with admin portal, real-time seat selection, secure checkout, and showtime management powered by RESTful APIs and SQL Server.
+            A full-stack MERN movie reservation system with admin portal, real-time seat selection, secure checkout, and showtime management.
           </p>
           <a href="https://github.com/abdullahiqbal2610/CineMAK.git" target="_blank" class="btn">
             <i class="fab fa-github"></i>
@@ -431,42 +502,38 @@
         </div>
       </div>
 
-      <!-- HIDDEN PROJECTS - These will be shown when "Show More" is clicked -->
-      
-      <!-- Project 4: Sudoku Game (HIDDEN) -->
       <div class="project-card hidden-project">
         <div class="project-image">
           <img
-            src="assets/images/project-sudoku.png"
-            alt="Screenshot of Sudoku Game"
+            src="assets/images/project-likert.png"
+            alt="Automated Likert Scoring System"
             style="width: 100%; height: 100%; object-fit: cover"
           />
         </div>
         <div class="project-content">
-          <h3>Sudoku Game</h3>
+          <h3>Automated Likert Scoring System</h3>
           <p>
-            An x8088 Assembly Sudoku console game with full input validation and board logic.
+            An NLP model using DistilBERT and transfer learning to automatically assign Likert-scale scores for psychological survey responses, achieving over 80% accuracy.
           </p>
-          <a href="https://github.com/abdullahiqbal2610/Suduko-Game" target="_blank" class="btn">
+          <a href="https://github.com/abdullahiqbal2610/Likert_Scorer.git" target="_blank" class="btn">
             <i class="fab fa-github"></i>
             View Repository
           </a>
         </div>
       </div>
 
-      <!-- Project 5: FASTBOOK (HIDDEN) -->
       <div class="project-card hidden-project">
         <div class="project-image">
           <img
             src="assets/images/project-fastbook.png"
-            alt="Screenshot of FASTBOOK console app"
+            alt="FASTBOOK Console App"
             style="width: 100%; height: 100%; object-fit: cover"
           />
         </div>
         <div class="project-content">
           <h3>FASTBOOK</h3>
           <p>
-            A Facebook-style C++ console app with user/admin auth, friend requests, and timelines.
+            A Facebook-style C++ console application implementing user authentication, friend requests, and timeline management.
           </p>
           <a href="https://github.com/abdullahiqbal2610/FASTBOOK" target="_blank" class="btn">
             <i class="fab fa-github"></i>
@@ -475,7 +542,6 @@
         </div>
       </div>
 
-      <!-- Project 6: Solitaire Game (HIDDEN) -->
       <div class="project-card hidden-project">
         <div class="project-image">
           <img
@@ -496,9 +562,28 @@
         </div>
       </div>
 
+      <div class="project-card hidden-project">
+        <div class="project-image">
+          <img
+            src="assets/images/project-sudoku.png"
+            alt="Screenshot of Sudoku Game"
+            style="width: 100%; height: 100%; object-fit: cover"
+          />
+        </div>
+        <div class="project-content">
+          <h3>Sudoku Game</h3>
+          <p>
+            An x8088 Assembly Sudoku console game with full input validation and board logic.
+          </p>
+          <a href="https://github.com/abdullahiqbal2610/Suduko-Game" target="_blank" class="btn">
+            <i class="fab fa-github"></i>
+            View Repository
+          </a>
+        </div>
+      </div>
+
     </div>
 
-    <!-- Show More / Show Less Button -->
     <div class="show-more-container">
       <button id="show-more-btn" class="btn btn-outline">
         <i class="fas fa-chevron-down"></i>
@@ -557,7 +642,7 @@
 
     <!-- FOOTER -->
     <footer class="site-footer">
-      <p>&copy; 2025 Abdullah Iqbal. Crafted with precision and passion.</p>
+      <p>&copy; 2026 Abdullah Iqbal. Crafted with precision and passion.</p>
     </footer>
 
     <script src="assets/js/main.js"></script>
