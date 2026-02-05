@@ -136,3 +136,53 @@ document.addEventListener('DOMContentLoaded', function() {
     });
   }
 });
+
+// ===================================
+// Tab Switching Logic (Experience / Education)
+// ===================================
+document.addEventListener('DOMContentLoaded', function() {
+    const tabBtns = document.querySelectorAll('.tab-btn');
+    const timelineSections = document.querySelectorAll('.timeline-section');
+  
+    if (tabBtns.length > 0) {
+      tabBtns.forEach(btn => {
+        btn.addEventListener('click', () => {
+          // 1. Remove active class from all buttons
+          tabBtns.forEach(b => b.classList.remove('active'));
+          // 2. Add active class to clicked button
+          btn.classList.add('active');
+  
+          // 3. Hide all sections
+          timelineSections.forEach(section => {
+            section.classList.remove('active');
+            section.style.display = 'none'; 
+          });
+  
+          // 4. Show target section
+          const targetId = btn.getAttribute('data-target');
+          const targetSection = document.getElementById(targetId);
+          if (targetSection) {
+            targetSection.style.display = 'block'; 
+            
+            // Trigger section animation
+            requestAnimationFrame(() => {
+                targetSection.classList.add('active');
+            });
+
+            // Animate internal items to ensure visibility
+            const items = targetSection.querySelectorAll('.timeline-item');
+            items.forEach((item, index) => {
+                // Reset scroll reveal styles if any
+                item.style.visibility = 'visible';
+                item.style.opacity = '0';
+                item.style.animation = 'none';
+                item.offsetHeight; /* trigger reflow */
+                
+                // Increased delay (0.15s) and duration (0.5s) for distinct line-by-line feel
+                item.style.animation = `fadeInUp 0.5s ease-out forwards ${index * 0.15}s`;
+            });
+          }
+        });
+      });
+    }
+  });
