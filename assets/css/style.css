@@ -608,6 +608,18 @@ body::before {
   color: var(--text-primary);
 }
 
+/* Mobile Glow Fallback */
+@media (hover: none) and (pointer: coarse) {
+  .glow-bg {
+    opacity: 0.15; /* Subtle constant glow on mobile */
+    background: radial-gradient(
+      circle at 50% 50%, 
+      rgba(255, 255, 255, 0.1), 
+      transparent 60%
+    );
+  }
+}
+
 .skill-item {
   margin-bottom: 1.5rem;
   position: relative;

@@ -66,11 +66,18 @@ sr.reveal("#about .profile-ring", { origin: "left", delay: 500 });
 sr.reveal("#about .about-text", { origin: "right", delay: 700 });
 
 // TIMELINE ITEMS
-document.querySelectorAll(".sr-timeline").forEach((el, i) => {
+// Only reveal items that are visible initially (Experience section)
+document.querySelectorAll(".timeline-section.active .sr-timeline").forEach((el, i) => {
   sr.reveal(el, {
     origin: i % 2 === 0 ? "left" : "right",
     delay: 800 + i * 200,
   });
+});
+
+// Remove ScrollReveal attributes from hidden items to prevent conflicts
+document.querySelectorAll(".timeline-section:not(.active) .sr-timeline").forEach(el => {
+  el.classList.remove('sr-timeline'); // Temporarily remove class or just don't init
+  // Ideally, we just don't call sr.reveal on them.
 });
 
 // SKILLS
@@ -169,16 +176,18 @@ document.addEventListener('DOMContentLoaded', function() {
                 targetSection.classList.add('active');
             });
 
-            // Animate internal items to ensure visibility
+            // Animate internal items
             const items = targetSection.querySelectorAll('.timeline-item');
             items.forEach((item, index) => {
-                // Reset scroll reveal styles if any
-                item.style.visibility = 'visible';
-                item.style.opacity = '0';
-                item.style.animation = 'none';
-                item.offsetHeight; /* trigger reflow */
+                // CRITICAL: Nuke all ScrollReveal inline styles
+                item.removeAttribute('style');
+                item.style.visibility = 'visible'; // Force visibility
+                item.style.opacity = '0'; // Start hidden for animation
                 
-                // Increased delay (0.15s) and duration (0.5s) for distinct line-by-line feel
+                // Force reflow
+                void item.offsetWidth;
+                
+                // Add our custom CSS animation
                 item.style.animation = `fadeInUp 0.5s ease-out forwards ${index * 0.15}s`;
             });
           }
