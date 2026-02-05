@@ -520,32 +520,64 @@ body::before {
   gap: 2rem;
 }
 
+
+/* Skill Cards with Spotlight Effect */
 .skill-category {
   background: var(--card-bg);
   border-radius: 20px;
   padding: 2rem;
   border: 1px solid var(--border-color);
-  transition: all 0.3s ease;
   position: relative;
   overflow: hidden;
+  transition: transform 0.3s ease, border-color 0.3s ease;
+  z-index: 1;
 }
 
+/* Dynamic Scanline Background */
 .skill-category::before {
   content: "";
   position: absolute;
   top: 0;
   left: 0;
-  right: 0;
-  height: 1px;
-  background: var(--gradient-primary);
-  opacity: 0.5;
+  width: 100%;
+  height: 100%;
+  background: repeating-linear-gradient(
+    to bottom,
+    transparent 0px,
+    transparent 2px,
+    rgba(255, 255, 255, 0.03) 3px,
+    transparent 4px
+  );
+  pointer-events: none;
+  z-index: -1;
+}
+
+/* Spotlight Glow */
+.glow-bg {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: radial-gradient(
+    800px circle at var(--mouse-x, 50%) var(--mouse-y, 50%), 
+    rgba(255, 255, 255, 0.06), 
+    transparent 40%
+  );
+  opacity: 0;
+  transition: opacity 0.3s;
+  pointer-events: none;
+  z-index: 0;
+}
+
+.skill-category:hover .glow-bg {
+  opacity: 1;
 }
 
 .skill-category:hover {
   transform: translateY(-5px);
-  box-shadow: var(--shadow-secondary);
-  border-color: var(--border-light);
-  background: var(--surface-bg);
+  border-color: rgba(255, 255, 255, 0.3);
+  box-shadow: 0 10px 40px -10px rgba(255, 255, 255, 0.1);
 }
 
 .skill-header {
@@ -553,12 +585,21 @@ body::before {
   align-items: center;
   gap: 1rem;
   margin-bottom: 1.5rem;
+  position: relative;
+  z-index: 2;
 }
 
 .skill-header i {
   font-size: 1.5rem;
   color: var(--accent-primary);
   text-shadow: var(--glow-primary);
+  /* Icon float animation */
+  animation: floatIcon 3s ease-in-out infinite;
+}
+
+@keyframes floatIcon {
+  0%, 100% { transform: translateY(0); }
+  50% { transform: translateY(-5px); }
 }
 
 .skill-header h3 {
@@ -569,6 +610,8 @@ body::before {
 
 .skill-item {
   margin-bottom: 1.5rem;
+  position: relative;
+  z-index: 2;
 }
 
 .skill-info {
@@ -586,27 +629,53 @@ body::before {
 .skill-level {
   font-size: 0.85rem;
   color: var(--text-muted);
-  background: var(--secondary-bg);
+  background: rgba(255, 255, 255, 0.05);
   padding: 0.25rem 0.75rem;
   border-radius: 12px;
-  border: 1px solid var(--border-color);
+  border: 1px solid var(--border-light);
 }
 
 .skill-bar {
   height: 6px;
-  background: var(--secondary-bg);
+  background: rgba(255, 255, 255, 0.1);
   border-radius: 3px;
   overflow: hidden;
-  border: 1px solid var(--border-color);
+  position: relative;
 }
 
+/* Shimmering Progress Bar */
 .skill-progress {
   height: 100%;
-  background: var(--gradient-primary);
+  background: var(--accent-primary);
   border-radius: 3px;
   width: 0;
   transition: width 1s ease;
-  box-shadow: var(--glow-primary);
+  position: relative;
+  overflow: hidden;
+  box-shadow: 0 0 10px rgba(255, 255, 255, 0.5);
+}
+
+.shimmer-bar::after {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: linear-gradient(
+    90deg,
+    transparent,
+    rgba(255, 255, 255, 0.8),
+    transparent
+  );
+  transform: translateX(-100%);
+  animation: shimmerMove 2s infinite;
+}
+
+@keyframes shimmerMove {
+  100% {
+    transform: translateX(100%);
+  }
 }
 
 /* Projects Section */
