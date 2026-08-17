@@ -47,12 +47,13 @@ const observer = new IntersectionObserver((entries) => {
 });
 observer.observe(skillsSection);
 
-// ScrollReveal setup
+// ScrollReveal setup — reset:false globally so reveals fire ONCE
+// (contact section was disappearing when projects expanded with reset:true)
 const sr = ScrollReveal({
   distance: "40px",
   duration: 800,
   easing: "ease-out",
-  reset: true,
+  reset: false,
   mobile: true,
 });
 
@@ -76,8 +77,7 @@ document.querySelectorAll(".timeline-section.active .sr-timeline").forEach((el, 
 
 // Remove ScrollReveal attributes from hidden items to prevent conflicts
 document.querySelectorAll(".timeline-section:not(.active) .sr-timeline").forEach(el => {
-  el.classList.remove('sr-timeline'); // Temporarily remove class or just don't init
-  // Ideally, we just don't call sr.reveal on them.
+  el.classList.remove('sr-timeline');
 });
 
 // SKILLS
@@ -88,10 +88,11 @@ sr.reveal("#skills .skill-category", { interval: 200, origin: "bottom" });
 sr.reveal("#projects .section-title", { origin: "top", delay: 500 });
 sr.reveal("#projects .project-card", { interval: 200, origin: "bottom" });
 
-// CONTACT
-sr.reveal("#contact h2", { origin: "left", delay: 500 });
-sr.reveal("#contact .contact-icons li", { interval: 150, origin: "left" });
-sr.reveal("#contact .btn", { scale: 0.8, delay: 900 });
+// CONTACT — reset:false (once only) so expanding projects can't hide these
+sr.reveal("#contact h2", { origin: "bottom", delay: 300, reset: false });
+sr.reveal("#contact p", { origin: "bottom", delay: 450, reset: false });
+sr.reveal("#contact .contact-icons li", { interval: 150, origin: "bottom", reset: false });
+sr.reveal("#contact .btn", { scale: 0.8, delay: 600, reset: false });
 
 // Remove loading class after animation completes
 window.addEventListener('load', function() {
@@ -122,7 +123,7 @@ document.addEventListener('DOMContentLoaded', function() {
         });
 
         // Update button text and icon
-        showMoreBtn.innerHTML = '<i class="fas fa-chevron-down"></i> Show Less Projects';
+        showMoreBtn.innerHTML = '<i class="fas fa-chevron-up"></i> Show Less Projects';
         showMoreBtn.classList.add('rotated');
       } else {
         // Hide projects
