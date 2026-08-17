@@ -125,6 +125,11 @@ document.addEventListener('DOMContentLoaded', function() {
         // Update button text and icon
         showMoreBtn.innerHTML = '<i class="fas fa-chevron-up"></i> Show Less Projects';
         showMoreBtn.classList.add('rotated');
+        
+        // Sync ScrollReveal so it recalculates positions for the Contact section
+        setTimeout(() => {
+          if (typeof sr !== 'undefined') sr.sync();
+        }, hiddenProjects.length * 150 + 500);
       } else {
         // Hide projects
         hiddenProjects.forEach(project => {
@@ -134,6 +139,8 @@ document.addEventListener('DOMContentLoaded', function() {
         // Update button text and icon
         showMoreBtn.innerHTML = '<i class="fas fa-chevron-down"></i> Show More Projects';
         showMoreBtn.classList.remove('rotated');
+        
+        if (typeof sr !== 'undefined') sr.sync();
 
         // Smooth scroll back to projects section
         document.getElementById('projects').scrollIntoView({ 
