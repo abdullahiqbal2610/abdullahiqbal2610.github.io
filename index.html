@@ -3,9 +3,27 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Abdullah Iqbal | Portfolio</title>
+    <title>Abdullah Iqbal | Full-Stack Engineer & AI Developer</title>
     <link rel="icon" type="image/png" href="assets/images/favicon.png" sizes="32x32">
     <link rel="apple-touch-icon" href="assets/images/apple-touch-icon.png">
+
+    <!-- SEO Meta Tags -->
+    <meta name="description" content="Abdullah Iqbal — Full-Stack & AI Engineer. Interned at Folio3 & Gaper.io. Built production RAG pipelines, MERN apps, and GenAI systems. FAST-NU CS student, 3.67 GPA, Harvard Aspire Alumni." />
+    <meta name="keywords" content="Abdullah Iqbal, Full-Stack Developer, AI Engineer, MERN Stack, React, Next.js, FastAPI, RAG, LangChain, FAST-NUCES, Portfolio" />
+    <meta name="author" content="Muhammad Abdullah Iqbal" />
+
+    <!-- Open Graph (LinkedIn, WhatsApp, Facebook previews) -->
+    <meta property="og:type" content="website" />
+    <meta property="og:url" content="https://abdullahiqbal2610.github.io/" />
+    <meta property="og:title" content="Abdullah Iqbal | Full-Stack Engineer & AI Developer" />
+    <meta property="og:description" content="Building production-grade systems with Next.js, FastAPI & RAG. Folio3 & Gaper.io intern. FAST-NU, 3.67 GPA, Harvard Aspire Alumni." />
+    <meta property="og:image" content="https://abdullahiqbal2610.github.io/assets/images/profile.jpg" />
+
+    <!-- Twitter Card -->
+    <meta name="twitter:card" content="summary_large_image" />
+    <meta name="twitter:title" content="Abdullah Iqbal | Full-Stack Engineer & AI Developer" />
+    <meta name="twitter:description" content="Building production-grade systems with Next.js, FastAPI & RAG. Folio3 & Gaper.io intern." />
+    <meta name="twitter:image" content="https://abdullahiqbal2610.github.io/assets/images/profile.jpg" />
 
     <!-- Google Fonts: Inter for clean modern look -->
     <link
@@ -19,8 +37,8 @@
       referrerpolicy="no-referrer"
     />
 
-    <!-- ScrollReveal.js -->
-    <script src="https://unpkg.com/scrollreveal"></script>
+    <!-- ScrollReveal.js — deferred so it doesn't block page render -->
+    <script src="https://unpkg.com/scrollreveal" defer></script>
     <link rel="stylesheet" href="assets/css/style.css" />
 
 <style>
@@ -57,8 +75,7 @@
   }
 </style>
   </head>
-  <body>
-    <body class="loading">
+  <body class="loading">
     <!-- BOOT ANIMATION -->
     <div class="boot-screen">
         <div class="logo-container">
@@ -94,7 +111,12 @@
   
     <nav class="navbar">
       <a href="#hero" class="logo">Abdullah Iqbal</a>
-      <ul class="nav-links">
+      <button class="hamburger" id="hamburger-btn" aria-label="Toggle navigation" aria-expanded="false">
+        <span class="ham-line"></span>
+        <span class="ham-line"></span>
+        <span class="ham-line"></span>
+      </button>
+      <ul class="nav-links" id="nav-links">
         <li><a href="#hero" class="nav-link">Home</a></li>
         <li><a href="#about" class="nav-link">About</a></li>
         <li><a href="#skills" class="nav-link">Skills</a></li>
@@ -112,9 +134,10 @@
           with precision and creativity.
         </p> -->
         <p class="tagline">
-          <span class="highlight">Computer Science Student</span> |
-          <span class="highlight">Full-Stack Developer</span> <br />
-          Building scalable, data-driven systems and pixel-perfect interfaces.
+          <span class="highlight">Full-Stack Engineer</span> &amp;
+          <span class="highlight">AI Developer</span>
+          <br />
+          <span class="hero-creds">Folio3 &amp; Gaper.io Intern &nbsp;·&nbsp; Harvard Aspire Alumni &nbsp;·&nbsp; FAST-NU &nbsp;·&nbsp; 3.67 GPA</span>
         </p>
         <div
           style="
@@ -392,8 +415,13 @@
         </div>
         <div class="project-content">
           <h3>Aniporia — Academic AI Tutor</h3>
+          <div class="project-metrics">
+            <span class="metric"><i class="fas fa-bullseye"></i> 80.4% accuracy</span>
+            <span class="metric"><i class="fas fa-project-diagram"></i> Microservices</span>
+            <span class="metric"><i class="fas fa-chart-network"></i> 3D knowledge graphs</span>
+          </div>
           <p>
-            An AI-powered platform that extracts text from handwritten notes using OCR, identifies knowledge gaps against syllabi with Gemini AI, and generates targeted quizzes.
+            AI tutoring platform automating 100% of manual academic gap analysis. Parses Gemini 2.5/TrOCR JSON payloads to map knowledge gaps with 80.4% accuracy via 3D UI graphs. Secured with JWT REST APIs.
           </p>
           <a href="https://github.com/abdullahiqbal2610/Aniporia" target="_blank" class="btn">
             <i class="fab fa-github"></i>
@@ -412,8 +440,13 @@
         </div>
         <div class="project-content">
           <h3>Fasaal AI (فصل اے آئی)</h3>
+          <div class="project-metrics">
+            <span class="metric"><i class="fas fa-city"></i> 29-city live data</span>
+            <span class="metric"><i class="fas fa-vial"></i> 45+ E2E tests</span>
+            <span class="metric"><i class="fas fa-lock"></i> AES-256 · 27 APIs</span>
+          </div>
           <p>
-            A WhatsApp-first agricultural assistant featuring crop disease diagnosis via Gemini Vision, RAG pipeline, live mandi prices, and an admin dashboard.
+            Trilingual WhatsApp AI bot for farmers — pgvector RAG pipeline with Groq LLMs, live mandi prices across 29 cities, AES-256 encrypted payloads across 11 DB tables &amp; 27+ REST APIs.
           </p>
           <a href="https://github.com/abdullahiqbal2610/fasaalAI" target="_blank" class="btn">
             <i class="fab fa-github"></i>
@@ -432,8 +465,13 @@
         </div>
         <div class="project-content">
           <h3>AI Backlink Engine</h3>
+          <div class="project-metrics">
+            <span class="metric"><i class="fas fa-bolt"></i> 100+ links/hr</span>
+            <span class="metric"><i class="fas fa-robot"></i> Fully autonomous</span>
+            <span class="metric"><i class="fas fa-brain"></i> RAG + Playwright</span>
+          </div>
           <p>
-            A fully autonomous, AI-driven engine generating 100+ high-quality backlinks per hour using Playwright stealth, RAG via ChromaDB, and asynchronous Redis queues.
+            Fully autonomous AI engine replacing manual SEO workflows — 100+ high-quality backlinks/hr using Playwright stealth, custom RAG pipeline via ChromaDB, Redis async queues &amp; an admin dashboard.
           </p>
           <a href="https://github.com/abdullahiqbal2610/Gaper-Backlink-Engine" target="_blank" class="btn">
             <i class="fab fa-github"></i>
