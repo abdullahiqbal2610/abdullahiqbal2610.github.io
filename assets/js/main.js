@@ -250,3 +250,31 @@ document.querySelectorAll(".skill-category").forEach((card) => {
     card.style.setProperty("--mouse-y", `${y}px`);
   });
 });
+
+// ===================================
+// Aceternity Text Hover Effect (Vanilla Port)
+// ===================================
+document.addEventListener("DOMContentLoaded", () => {
+  const heroSection = document.getElementById("hero");
+  const revealMask = document.getElementById("revealMask");
+  const gradientText = document.querySelector(".gradient-text");
+  
+  if (heroSection && revealMask && gradientText) {
+    heroSection.addEventListener("mousemove", (e) => {
+      const rect = heroSection.getBoundingClientRect();
+      const x = ((e.clientX - rect.left) / rect.width) * 100;
+      const y = ((e.clientY - rect.top) / rect.height) * 100;
+      
+      revealMask.setAttribute("cx", `${x}%`);
+      revealMask.setAttribute("cy", `${y}%`);
+    });
+
+    heroSection.addEventListener("mouseenter", () => {
+      gradientText.style.opacity = "1";
+    });
+
+    heroSection.addEventListener("mouseleave", () => {
+      gradientText.style.opacity = "0";
+    });
+  }
+});
