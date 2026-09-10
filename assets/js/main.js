@@ -82,71 +82,83 @@ observer.observe(skillsSection);
 
 // ===================================
 // GSAP & ScrollTrigger Animations
+// (initialized AFTER Lenis — see bottom of file)
 // ===================================
-document.addEventListener("DOMContentLoaded", () => {
-  if (typeof gsap !== "undefined" && typeof ScrollTrigger !== "undefined") {
-    gsap.registerPlugin(ScrollTrigger);
+function initGSAPAnimations() {
+  if (typeof gsap === "undefined" || typeof ScrollTrigger === "undefined") return;
 
-    // HERO
-    gsap.from("#hero .hero-content h1", { y: 50, opacity: 0, duration: 1, delay: 4.8, ease: "power3.out" });
-    gsap.from("#hero .hero-content p", { y: 30, opacity: 0, duration: 1, delay: 5.0, ease: "power3.out" });
-    gsap.from("#hero .hero-content .btn", { scale: 0.8, opacity: 0, duration: 0.8, delay: 5.2, stagger: 0.2, ease: "back.out(1.7)" });
+  gsap.registerPlugin(ScrollTrigger);
 
-    // ABOUT
-    gsap.from("#about .profile-ring", {
-      scrollTrigger: { trigger: "#about", start: "top 80%" },
-      x: -50, opacity: 0, duration: 1, ease: "power3.out"
+  // Connect Lenis scroll events to GSAP ScrollTrigger so they share
+  // the same scroll position — this is the key fix for blank sections.
+  if (typeof lenis !== 'undefined') {
+    lenis.on('scroll', ScrollTrigger.update);
+    gsap.ticker.add((time) => {
+      lenis.raf(time * 1000);
     });
-    gsap.from("#about .about-text", {
-      scrollTrigger: { trigger: "#about", start: "top 80%" },
-      x: 50, opacity: 0, duration: 1, ease: "power3.out"
-    });
-
-    // TIMELINE ITEMS (Active)
-    gsap.from(".timeline-section.active .timeline-item", {
-      scrollTrigger: { trigger: ".timeline-section.active", start: "top 85%" },
-      y: 40, opacity: 0, duration: 0.8, stagger: 0.2, ease: "power2.out"
-    });
-
-    // SKILLS
-    gsap.from("#skills .section-title", {
-      scrollTrigger: { trigger: "#skills", start: "top 85%" },
-      y: 30, opacity: 0, duration: 0.8, ease: "power3.out"
-    });
-    gsap.from("#skills .skill-category", {
-      scrollTrigger: { trigger: "#skills", start: "top 80%" },
-      y: 50, opacity: 0, duration: 0.8, stagger: 0.15, ease: "power3.out"
-    });
-
-    // PROJECTS
-    gsap.from("#projects .section-title", {
-      scrollTrigger: { trigger: "#projects", start: "top 85%" },
-      y: 30, opacity: 0, duration: 0.8, ease: "power3.out"
-    });
-    gsap.from("#projects .project-card:not(.hidden-project)", {
-      scrollTrigger: { trigger: "#projects", start: "top 80%" },
-      y: 50, opacity: 0, duration: 0.8, stagger: 0.2, ease: "power3.out"
-    });
-
-    // CONTACT
-    gsap.from("#contact h2", {
-      scrollTrigger: { trigger: "#contact", start: "top 85%" },
-      y: 30, opacity: 0, duration: 0.8, ease: "power3.out"
-    });
-    gsap.from("#contact p", {
-      scrollTrigger: { trigger: "#contact", start: "top 80%" },
-      y: 30, opacity: 0, duration: 0.8, ease: "power3.out"
-    });
-    gsap.from("#contact .contact-icons li", {
-      scrollTrigger: { trigger: "#contact", start: "top 85%" },
-      y: 20, opacity: 0, duration: 0.6, stagger: 0.1, ease: "back.out(1.5)"
-    });
-    gsap.from("#contact .btn", {
-      scrollTrigger: { trigger: "#contact", start: "top 85%" },
-      scale: 0.8, opacity: 0, duration: 0.8, ease: "back.out(1.5)"
-    });
+    gsap.ticker.lagSmoothing(0);
   }
-});
+
+  // HERO — only delay if boot screen is showing (first visit)
+  const heroDelay = sessionStorage.getItem('bootScreenShown') ? 0 : 4.8;
+  gsap.from("#hero .hero-content h1", { y: 50, opacity: 0, duration: 1, delay: heroDelay, ease: "power3.out" });
+  gsap.from("#hero .hero-content p",  { y: 30, opacity: 0, duration: 1, delay: heroDelay + 0.2, ease: "power3.out" });
+  gsap.from("#hero .hero-content .btn", { scale: 0.8, opacity: 0, duration: 0.8, delay: heroDelay + 0.4, stagger: 0.15, ease: "back.out(1.7)" });
+
+  // ABOUT
+  gsap.from("#about .profile-ring", {
+    scrollTrigger: { trigger: "#about", start: "top 80%", scroller: document.documentElement },
+    x: -50, opacity: 0, duration: 1, ease: "power3.out"
+  });
+  gsap.from("#about .about-text", {
+    scrollTrigger: { trigger: "#about", start: "top 80%", scroller: document.documentElement },
+    x: 50, opacity: 0, duration: 1, ease: "power3.out"
+  });
+
+  // TIMELINE ITEMS (Active)
+  gsap.from(".timeline-section.active .timeline-item", {
+    scrollTrigger: { trigger: ".timeline-section.active", start: "top 85%", scroller: document.documentElement },
+    y: 40, opacity: 0, duration: 0.8, stagger: 0.2, ease: "power2.out"
+  });
+
+  // SKILLS
+  gsap.from("#skills .section-title", {
+    scrollTrigger: { trigger: "#skills", start: "top 85%", scroller: document.documentElement },
+    y: 30, opacity: 0, duration: 0.8, ease: "power3.out"
+  });
+  gsap.from("#skills .skill-category", {
+    scrollTrigger: { trigger: "#skills", start: "top 80%", scroller: document.documentElement },
+    y: 50, opacity: 0, duration: 0.8, stagger: 0.12, ease: "power3.out"
+  });
+
+  // PROJECTS
+  gsap.from("#projects .section-title", {
+    scrollTrigger: { trigger: "#projects", start: "top 85%", scroller: document.documentElement },
+    y: 30, opacity: 0, duration: 0.8, ease: "power3.out"
+  });
+  gsap.from("#projects .project-card:not(.hidden-project)", {
+    scrollTrigger: { trigger: "#projects", start: "top 80%", scroller: document.documentElement },
+    y: 50, opacity: 0, duration: 0.8, stagger: 0.15, ease: "power3.out"
+  });
+
+  // CONTACT
+  gsap.from("#contact h2", {
+    scrollTrigger: { trigger: "#contact", start: "top 85%", scroller: document.documentElement },
+    y: 30, opacity: 0, duration: 0.8, ease: "power3.out"
+  });
+  gsap.from("#contact p", {
+    scrollTrigger: { trigger: "#contact", start: "top 80%", scroller: document.documentElement },
+    y: 30, opacity: 0, duration: 0.8, ease: "power3.out"
+  });
+  gsap.from("#contact .contact-icons li", {
+    scrollTrigger: { trigger: "#contact", start: "top 85%", scroller: document.documentElement },
+    y: 20, opacity: 0, duration: 0.6, stagger: 0.1, ease: "back.out(1.5)"
+  });
+  gsap.from("#contact .btn", {
+    scrollTrigger: { trigger: "#contact", start: "top 85%", scroller: document.documentElement },
+    scale: 0.8, opacity: 0, duration: 0.8, ease: "back.out(1.5)"
+  });
+}
 
 
 // ===================================
@@ -290,24 +302,21 @@ document.querySelectorAll(".skill-category").forEach((card) => {
 // ===================================
 // Lenis Smooth Scroll
 // ===================================
+// duration reduced from 1.2 → 0.8 to fix trackpad lag.
+// The RAF loop is removed — GSAP ticker drives Lenis instead
+// (see initGSAPAnimations) so ScrollTrigger stays in sync.
 const lenis = new Lenis({
-  duration: 1.2,
+  duration: 0.8,
   easing: (t) => Math.min(1, 1.001 - Math.pow(2, -10 * t)),
-  direction: 'vertical',
-  gestureDirection: 'vertical',
-  smooth: true,
-  mouseMultiplier: 1,
+  smoothWheel: true,
   smoothTouch: false,
-  touchMultiplier: 2,
+  touchMultiplier: 1.5,
   infinite: false,
 });
 
-function raf(time) {
-  lenis.raf(time);
-  requestAnimationFrame(raf);
-}
-
-requestAnimationFrame(raf);
+// Kick off GSAP animations now that Lenis is ready.
+// GSAP ticker will drive lenis.raf() — no separate rAF loop needed.
+document.addEventListener('DOMContentLoaded', initGSAPAnimations);
 
 
 // ===================================
