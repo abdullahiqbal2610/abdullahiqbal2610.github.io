@@ -305,6 +305,13 @@ body::before {
 @media (max-width: 768px) {
   .hero-bg-text-container {
     top: -15%; /* Move up on mobile to sit behind the name */
+    transform: scale(1.4); /* Make it 40% larger on mobile */
+  }
+  .hero-bg-text.base-text {
+    stroke: rgba(255, 255, 255, 0.12) !important; /* Make faint outline more visible on mobile */
+  }
+  .hero-bg-text.animated-text {
+    stroke: rgba(255, 255, 255, 0.35) !important; /* Make glowing outline brighter on mobile */
   }
 }
 
