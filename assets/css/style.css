@@ -344,9 +344,6 @@ body::before {
   opacity: 0; /* Hidden by default until hovered */
   transition: opacity 0.3s ease;
 }
-  max-width: 800px;
-  margin: 0 auto;
-}
 
 .hero-content h1 {
   font-size: clamp(2.5rem, 6vw, 4rem);
