@@ -1,3 +1,5 @@
+// Keep only these parts:
+
 // ===================================
 // Hamburger Menu Toggle
 // ===================================
@@ -69,101 +71,67 @@ function animateSkillBars() {
 
 // Trigger skill bars animation when skills section is visible
 const skillsSection = document.getElementById("skills");
-if (skillsSection) {
-  const observer = new IntersectionObserver((entries) => {
-    entries.forEach((entry) => {
-      if (entry.isIntersecting) animateSkillBars();
-    });
+const observer = new IntersectionObserver((entries) => {
+  entries.forEach((entry) => {
+    if (entry.isIntersecting) {
+      animateSkillBars();
+    }
   });
-  observer.observe(skillsSection);
-}
+});
+observer.observe(skillsSection);
 
-// ===================================
-// GSAP & ScrollTrigger Animations
-// ===================================
-document.addEventListener("DOMContentLoaded", () => {
-  if (typeof gsap === "undefined" || typeof ScrollTrigger === "undefined") return;
+// ScrollReveal setup — reset:false globally so reveals fire ONCE
+// (contact section was disappearing when projects expanded with reset:true)
+const sr = ScrollReveal({
+  distance: "40px",
+  duration: 800,
+  easing: "ease-out",
+  reset: false,
+  mobile: true,
+});
 
-  gsap.registerPlugin(ScrollTrigger);
+// HERO
+sr.reveal("#hero .hero-content h1", { origin: "bottom", delay: 500 });
+sr.reveal("#hero .hero-content p", { origin: "bottom", delay: 700 });
+sr.reveal("#hero .hero-content .btn", { scale: 0.8, delay: 900 });
 
-  // HERO — skip the 4.8s delay on revisits (boot screen already shown)
-  const heroDelay = sessionStorage.getItem('bootScreenShown') ? 0 : 4.8;
-  gsap.from("#hero .hero-content h1", { y: 50, opacity: 0, duration: 1, delay: heroDelay, ease: "power3.out" });
-  gsap.from("#hero .hero-content p",  { y: 30, opacity: 0, duration: 1, delay: heroDelay + 0.2, ease: "power3.out" });
-  gsap.from("#hero .hero-content .btn", { scale: 0.8, opacity: 0, duration: 0.8, delay: heroDelay + 0.4, stagger: 0.15, ease: "back.out(1.7)" });
+// ABOUT
+sr.reveal("#about .profile-ring", { origin: "left", delay: 500 });
+sr.reveal("#about .about-text", { origin: "right", delay: 700 });
 
-  // ABOUT
-  gsap.from("#about .profile-ring", {
-    scrollTrigger: { trigger: "#about", start: "top 80%" },
-    x: -50, opacity: 0, duration: 1, ease: "power3.out"
-  });
-  gsap.from("#about .about-text", {
-    scrollTrigger: { trigger: "#about", start: "top 80%" },
-    x: 50, opacity: 0, duration: 1, ease: "power3.out"
-  });
-
-  // TIMELINE ITEMS (Active section only)
-  gsap.from(".timeline-section.active .timeline-item", {
-    scrollTrigger: { trigger: ".timeline-section.active", start: "top 85%" },
-    y: 40, opacity: 0, duration: 0.8, stagger: 0.2, ease: "power2.out"
-  });
-
-  // SKILLS
-  gsap.from("#skills .section-title", {
-    scrollTrigger: { trigger: "#skills", start: "top 85%" },
-    y: 30, opacity: 0, duration: 0.8, ease: "power3.out"
-  });
-  gsap.from("#skills .skill-category", {
-    scrollTrigger: { trigger: "#skills", start: "top 80%" },
-    y: 50, opacity: 0, duration: 0.8, stagger: 0.12, ease: "power3.out"
-  });
-
-  // PROJECTS
-  gsap.from("#projects .section-title", {
-    scrollTrigger: { trigger: "#projects", start: "top 85%" },
-    y: 30, opacity: 0, duration: 0.8, ease: "power3.out"
-  });
-  gsap.from("#projects .project-card:not(.hidden-project)", {
-    scrollTrigger: { trigger: "#projects", start: "top 80%" },
-    y: 50, opacity: 0, duration: 0.8, stagger: 0.15, ease: "power3.out"
-  });
-
-  // CONTACT
-  gsap.from("#contact h2", {
-    scrollTrigger: { trigger: "#contact", start: "top 85%" },
-    y: 30, opacity: 0, duration: 0.8, ease: "power3.out"
-  });
-  gsap.from("#contact p", {
-    scrollTrigger: { trigger: "#contact", start: "top 80%" },
-    y: 30, opacity: 0, duration: 0.8, ease: "power3.out"
-  });
-  gsap.from("#contact .contact-icons li", {
-    scrollTrigger: { trigger: "#contact", start: "top 85%" },
-    y: 20, opacity: 0, duration: 0.6, stagger: 0.1, ease: "back.out(1.5)"
-  });
-  gsap.from("#contact .btn", {
-    scrollTrigger: { trigger: "#contact", start: "top 85%" },
-    scale: 0.8, opacity: 0, duration: 0.8, ease: "back.out(1.5)"
+// TIMELINE ITEMS
+// Only reveal items that are visible initially (Experience section)
+document.querySelectorAll(".timeline-section.active .sr-timeline").forEach((el, i) => {
+  sr.reveal(el, {
+    origin: i % 2 === 0 ? "left" : "right",
+    delay: 800 + i * 200,
   });
 });
 
+// Remove ScrollReveal attributes from hidden items to prevent conflicts
+document.querySelectorAll(".timeline-section:not(.active) .sr-timeline").forEach(el => {
+  el.classList.remove('sr-timeline');
+});
 
-// ===================================
-// Boot Screen & Session Storage
-// ===================================
+// SKILLS
+sr.reveal("#skills .section-title", { origin: "top", delay: 500 });
+sr.reveal("#skills .skill-category", { interval: 200, origin: "bottom" });
+
+// PROJECTS
+sr.reveal("#projects .section-title", { origin: "top", delay: 500 });
+sr.reveal("#projects .project-card", { interval: 200, origin: "bottom" });
+
+// CONTACT — reset:false (once only) so expanding projects can't hide these
+sr.reveal("#contact h2", { origin: "bottom", delay: 300, reset: false });
+sr.reveal("#contact p", { origin: "bottom", delay: 450, reset: false });
+sr.reveal("#contact .contact-icons li", { interval: 150, origin: "bottom", reset: false });
+sr.reveal("#contact .btn", { scale: 0.8, delay: 600, reset: false });
+
+// Remove loading class after animation completes
 window.addEventListener('load', function() {
-    const bootScreen = document.querySelector('.boot-screen');
-    if (sessionStorage.getItem('bootScreenShown')) {
-        // Already shown this session — skip animation instantly
+    setTimeout(function() {
         document.body.classList.remove('loading');
-        if (bootScreen) bootScreen.style.display = 'none';
-    } else {
-        // First visit — show boot animation, then mark as shown
-        sessionStorage.setItem('bootScreenShown', 'true');
-        setTimeout(function() {
-            document.body.classList.remove('loading');
-        }, 4500);
-    }
+    }, 4500);
 });
 
 
@@ -180,22 +148,38 @@ document.addEventListener('DOMContentLoaded', function() {
       isExpanded = !isExpanded;
 
       if (isExpanded) {
+        // Show hidden projects with staggered animation
         hiddenProjects.forEach((project, index) => {
           setTimeout(() => {
             project.classList.add('show');
-          }, index * 150);
+          }, index * 150); // 150ms delay between each project
         });
+
+        // Update button text and icon
         showMoreBtn.innerHTML = '<i class="fas fa-chevron-up"></i> Show Less Projects';
         showMoreBtn.classList.add('rotated');
+        
+        // Sync ScrollReveal so it recalculates positions for the Contact section
         setTimeout(() => {
-          if (typeof ScrollTrigger !== 'undefined') ScrollTrigger.refresh();
+          if (typeof sr !== 'undefined') sr.sync();
         }, hiddenProjects.length * 150 + 500);
       } else {
-        hiddenProjects.forEach(project => project.classList.remove('show'));
+        // Hide projects
+        hiddenProjects.forEach(project => {
+          project.classList.remove('show');
+        });
+
+        // Update button text and icon
         showMoreBtn.innerHTML = '<i class="fas fa-chevron-down"></i> Show More Projects';
         showMoreBtn.classList.remove('rotated');
-        if (typeof ScrollTrigger !== 'undefined') ScrollTrigger.refresh();
-        document.getElementById('projects').scrollIntoView({ behavior: 'smooth', block: 'start' });
+        
+        if (typeof sr !== 'undefined') sr.sync();
+
+        // Smooth scroll back to projects section
+        document.getElementById('projects').scrollIntoView({ 
+          behavior: 'smooth', 
+          block: 'start' 
+        });
       }
     });
   }
@@ -207,37 +191,51 @@ document.addEventListener('DOMContentLoaded', function() {
 document.addEventListener('DOMContentLoaded', function() {
     const tabBtns = document.querySelectorAll('.tab-btn');
     const timelineSections = document.querySelectorAll('.timeline-section');
-
+  
     if (tabBtns.length > 0) {
       tabBtns.forEach(btn => {
         btn.addEventListener('click', () => {
+          // 1. Remove active class from all buttons
           tabBtns.forEach(b => b.classList.remove('active'));
+          // 2. Add active class to clicked button
           btn.classList.add('active');
-
+  
+          // 3. Hide all sections
           timelineSections.forEach(section => {
             section.classList.remove('active');
-            section.style.display = 'none';
+            section.style.display = 'none'; 
           });
-
+  
+          // 4. Show target section
           const targetId = btn.getAttribute('data-target');
           const targetSection = document.getElementById(targetId);
           if (targetSection) {
-            targetSection.style.display = 'block';
-            requestAnimationFrame(() => targetSection.classList.add('active'));
+            targetSection.style.display = 'block'; 
+            
+            // Trigger section animation
+            requestAnimationFrame(() => {
+                targetSection.classList.add('active');
+            });
 
+            // Animate internal items
             const items = targetSection.querySelectorAll('.timeline-item');
             items.forEach((item, index) => {
+                // CRITICAL: Nuke all ScrollReveal inline styles
                 item.removeAttribute('style');
-                item.style.visibility = 'visible';
-                item.style.opacity = '0';
+                item.style.visibility = 'visible'; // Force visibility
+                item.style.opacity = '0'; // Start hidden for animation
+                
+                // Force reflow
                 void item.offsetWidth;
+                
+                // Add our custom CSS animation
                 item.style.animation = `fadeInUp 0.5s ease-out forwards ${index * 0.15}s`;
             });
           }
         });
       });
     }
-});
+  });
 
 // ===================================
 // Spotlight Effect for Skill Cards
@@ -245,50 +243,10 @@ document.addEventListener('DOMContentLoaded', function() {
 document.querySelectorAll(".skill-category").forEach((card) => {
   card.addEventListener("mousemove", (e) => {
     const rect = card.getBoundingClientRect();
-    card.style.setProperty("--mouse-x", `${e.clientX - rect.left}px`);
-    card.style.setProperty("--mouse-y", `${e.clientY - rect.top}px`);
+    const x = e.clientX - rect.left;
+    const y = e.clientY - rect.top;
+
+    card.style.setProperty("--mouse-x", `${x}px`);
+    card.style.setProperty("--mouse-y", `${y}px`);
   });
-});
-
-
-// ===================================
-// 3D Tilt Effect (VanillaTilt)
-// ===================================
-document.addEventListener("DOMContentLoaded", () => {
-    if (typeof VanillaTilt !== 'undefined') {
-        VanillaTilt.init(document.querySelectorAll(".project-card"), {
-            max: 10,
-            speed: 400,
-            glare: true,
-            "max-glare": 0.2,
-        });
-        VanillaTilt.init(document.querySelectorAll(".skill-category"), {
-            max: 10,
-            speed: 400,
-            glare: true,
-            "max-glare": 0.1,
-        });
-    }
-});
-
-
-// ===================================
-// Custom Interactive Cursor
-// ===================================
-document.addEventListener("DOMContentLoaded", () => {
-    const cursor = document.getElementById('custom-cursor');
-    const follower = document.getElementById('custom-cursor-follower');
-
-    if (cursor && follower && window.matchMedia("(pointer: fine)").matches) {
-        document.addEventListener('mousemove', (e) => {
-            cursor.style.transform = `translate(${e.clientX}px, ${e.clientY}px)`;
-            follower.style.transform = `translate(${e.clientX}px, ${e.clientY}px)`;
-        });
-
-        const interactives = document.querySelectorAll('a, button, .project-card, .skill-category');
-        interactives.forEach((el) => {
-            el.addEventListener('mouseenter', () => document.body.classList.add('cursor-hover'));
-            el.addEventListener('mouseleave', () => document.body.classList.remove('cursor-hover'));
-        });
-    }
 });
