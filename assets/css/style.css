@@ -331,7 +331,7 @@ body::before {
   stroke: rgba(255, 255, 255, 0.2);
   stroke-dasharray: 1000;
   stroke-dashoffset: 1000;
-  animation: strokeReveal 4s ease-in-out infinite alternate;
+  animation: strokeReveal 2s ease-in-out infinite alternate;
 }
 
 @keyframes strokeReveal {
