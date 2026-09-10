@@ -80,58 +80,93 @@ const observer = new IntersectionObserver((entries) => {
 });
 observer.observe(skillsSection);
 
-// ScrollReveal setup — reset:false globally so reveals fire ONCE
-// (contact section was disappearing when projects expanded with reset:true)
-const sr = ScrollReveal({
-  distance: "40px",
-  duration: 800,
-  easing: "ease-out",
-  reset: false,
-  mobile: true,
+// ===================================
+// GSAP & ScrollTrigger Animations
+// ===================================
+document.addEventListener("DOMContentLoaded", () => {
+  if (typeof gsap !== "undefined" && typeof ScrollTrigger !== "undefined") {
+    gsap.registerPlugin(ScrollTrigger);
+
+    // HERO
+    gsap.from("#hero .hero-content h1", { y: 50, opacity: 0, duration: 1, delay: 4.8, ease: "power3.out" });
+    gsap.from("#hero .hero-content p", { y: 30, opacity: 0, duration: 1, delay: 5.0, ease: "power3.out" });
+    gsap.from("#hero .hero-content .btn", { scale: 0.8, opacity: 0, duration: 0.8, delay: 5.2, stagger: 0.2, ease: "back.out(1.7)" });
+
+    // ABOUT
+    gsap.from("#about .profile-ring", {
+      scrollTrigger: { trigger: "#about", start: "top 80%" },
+      x: -50, opacity: 0, duration: 1, ease: "power3.out"
+    });
+    gsap.from("#about .about-text", {
+      scrollTrigger: { trigger: "#about", start: "top 80%" },
+      x: 50, opacity: 0, duration: 1, ease: "power3.out"
+    });
+
+    // TIMELINE ITEMS (Active)
+    gsap.from(".timeline-section.active .timeline-item", {
+      scrollTrigger: { trigger: ".timeline-section.active", start: "top 85%" },
+      y: 40, opacity: 0, duration: 0.8, stagger: 0.2, ease: "power2.out"
+    });
+
+    // SKILLS
+    gsap.from("#skills .section-title", {
+      scrollTrigger: { trigger: "#skills", start: "top 85%" },
+      y: 30, opacity: 0, duration: 0.8, ease: "power3.out"
+    });
+    gsap.from("#skills .skill-category", {
+      scrollTrigger: { trigger: "#skills", start: "top 80%" },
+      y: 50, opacity: 0, duration: 0.8, stagger: 0.15, ease: "power3.out"
+    });
+
+    // PROJECTS
+    gsap.from("#projects .section-title", {
+      scrollTrigger: { trigger: "#projects", start: "top 85%" },
+      y: 30, opacity: 0, duration: 0.8, ease: "power3.out"
+    });
+    gsap.from("#projects .project-card:not(.hidden-project)", {
+      scrollTrigger: { trigger: "#projects", start: "top 80%" },
+      y: 50, opacity: 0, duration: 0.8, stagger: 0.2, ease: "power3.out"
+    });
+
+    // CONTACT
+    gsap.from("#contact h2", {
+      scrollTrigger: { trigger: "#contact", start: "top 85%" },
+      y: 30, opacity: 0, duration: 0.8, ease: "power3.out"
+    });
+    gsap.from("#contact p", {
+      scrollTrigger: { trigger: "#contact", start: "top 80%" },
+      y: 30, opacity: 0, duration: 0.8, ease: "power3.out"
+    });
+    gsap.from("#contact .contact-icons li", {
+      scrollTrigger: { trigger: "#contact", start: "top 85%" },
+      y: 20, opacity: 0, duration: 0.6, stagger: 0.1, ease: "back.out(1.5)"
+    });
+    gsap.from("#contact .btn", {
+      scrollTrigger: { trigger: "#contact", start: "top 85%" },
+      scale: 0.8, opacity: 0, duration: 0.8, ease: "back.out(1.5)"
+    });
+  }
 });
 
-// HERO
-sr.reveal("#hero .hero-content h1", { origin: "bottom", delay: 500 });
-sr.reveal("#hero .hero-content p", { origin: "bottom", delay: 700 });
-sr.reveal("#hero .hero-content .btn", { scale: 0.8, delay: 900 });
 
-// ABOUT
-sr.reveal("#about .profile-ring", { origin: "left", delay: 500 });
-sr.reveal("#about .about-text", { origin: "right", delay: 700 });
-
-// TIMELINE ITEMS
-// Only reveal items that are visible initially (Experience section)
-document.querySelectorAll(".timeline-section.active .sr-timeline").forEach((el, i) => {
-  sr.reveal(el, {
-    origin: i % 2 === 0 ? "left" : "right",
-    delay: 800 + i * 200,
-  });
-});
-
-// Remove ScrollReveal attributes from hidden items to prevent conflicts
-document.querySelectorAll(".timeline-section:not(.active) .sr-timeline").forEach(el => {
-  el.classList.remove('sr-timeline');
-});
-
-// SKILLS
-sr.reveal("#skills .section-title", { origin: "top", delay: 500 });
-sr.reveal("#skills .skill-category", { interval: 200, origin: "bottom" });
-
-// PROJECTS
-sr.reveal("#projects .section-title", { origin: "top", delay: 500 });
-sr.reveal("#projects .project-card", { interval: 200, origin: "bottom" });
-
-// CONTACT — reset:false (once only) so expanding projects can't hide these
-sr.reveal("#contact h2", { origin: "bottom", delay: 300, reset: false });
-sr.reveal("#contact p", { origin: "bottom", delay: 450, reset: false });
-sr.reveal("#contact .contact-icons li", { interval: 150, origin: "bottom", reset: false });
-sr.reveal("#contact .btn", { scale: 0.8, delay: 600, reset: false });
-
-// Remove loading class after animation completes
+// ===================================
+// Boot Screen & Session Storage
+// ===================================
 window.addEventListener('load', function() {
-    setTimeout(function() {
+    const bootScreen = document.querySelector('.boot-screen');
+    if (sessionStorage.getItem('bootScreenShown')) {
+        // Already shown this session, skip animation
         document.body.classList.remove('loading');
-    }, 4500);
+        if (bootScreen) {
+            bootScreen.style.display = 'none';
+        }
+    } else {
+        // Show animation and save to session storage
+        sessionStorage.setItem('bootScreenShown', 'true');
+        setTimeout(function() {
+            document.body.classList.remove('loading');
+        }, 4500);
+    }
 });
 
 
@@ -161,7 +196,7 @@ document.addEventListener('DOMContentLoaded', function() {
         
         // Sync ScrollReveal so it recalculates positions for the Contact section
         setTimeout(() => {
-          if (typeof sr !== 'undefined') sr.sync();
+          if (typeof ScrollTrigger !== 'undefined') ScrollTrigger.refresh();
         }, hiddenProjects.length * 150 + 500);
       } else {
         // Hide projects
@@ -173,7 +208,7 @@ document.addEventListener('DOMContentLoaded', function() {
         showMoreBtn.innerHTML = '<i class="fas fa-chevron-down"></i> Show More Projects';
         showMoreBtn.classList.remove('rotated');
         
-        if (typeof sr !== 'undefined') sr.sync();
+        if (typeof ScrollTrigger !== 'undefined') ScrollTrigger.refresh();
 
         // Smooth scroll back to projects section
         document.getElementById('projects').scrollIntoView({ 
@@ -249,4 +284,77 @@ document.querySelectorAll(".skill-category").forEach((card) => {
     card.style.setProperty("--mouse-x", `${x}px`);
     card.style.setProperty("--mouse-y", `${y}px`);
   });
+});
+
+
+// ===================================
+// Lenis Smooth Scroll
+// ===================================
+const lenis = new Lenis({
+  duration: 1.2,
+  easing: (t) => Math.min(1, 1.001 - Math.pow(2, -10 * t)),
+  direction: 'vertical',
+  gestureDirection: 'vertical',
+  smooth: true,
+  mouseMultiplier: 1,
+  smoothTouch: false,
+  touchMultiplier: 2,
+  infinite: false,
+});
+
+function raf(time) {
+  lenis.raf(time);
+  requestAnimationFrame(raf);
+}
+
+requestAnimationFrame(raf);
+
+
+// ===================================
+// 3D Tilt Effect (VanillaTilt)
+// ===================================
+document.addEventListener("DOMContentLoaded", () => {
+    if (typeof VanillaTilt !== 'undefined') {
+        VanillaTilt.init(document.querySelectorAll(".project-card"), {
+            max: 10,
+            speed: 400,
+            glare: true,
+            "max-glare": 0.2,
+        });
+
+        VanillaTilt.init(document.querySelectorAll(".skill-category"), {
+            max: 10,
+            speed: 400,
+            glare: true,
+            "max-glare": 0.1,
+        });
+    }
+});
+
+
+// ===================================
+// Custom Interactive Cursor
+// ===================================
+document.addEventListener("DOMContentLoaded", () => {
+    const cursor = document.getElementById('custom-cursor');
+    const follower = document.getElementById('custom-cursor-follower');
+
+    if (cursor && follower && window.matchMedia("(pointer: fine)").matches) {
+        document.addEventListener('mousemove', (e) => {
+            cursor.style.transform = `translate(${e.clientX}px, ${e.clientY}px)`;
+            follower.style.transform = `translate(${e.clientX}px, ${e.clientY}px)`;
+        });
+
+        // Add hover effect to interactive elements
+        const interactives = document.querySelectorAll('a, button, .project-card, .skill-category');
+
+        interactives.forEach((el) => {
+            el.addEventListener('mouseenter', () => {
+                document.body.classList.add('cursor-hover');
+            });
+            el.addEventListener('mouseleave', () => {
+                document.body.classList.remove('cursor-hover');
+            });
+        });
+    }
 });
