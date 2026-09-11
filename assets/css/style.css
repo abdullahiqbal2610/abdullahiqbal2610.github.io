@@ -307,7 +307,7 @@ body::before {
     top: -15%;
   }
   .hero-bg-text {
-    font-size: 42px; /* slightly larger within the viewBox, still contained */
+    font-size: 56px; /* slightly larger within the viewBox, still contained */
   }
   .hero-bg-text.base-text {
     stroke: rgba(255, 255, 255, 0.12) !important;
