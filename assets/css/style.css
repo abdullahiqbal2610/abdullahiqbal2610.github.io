@@ -307,7 +307,7 @@ body::before {
     top: -15%;
   }
   .hero-bg-text {
-    font-size: 56px; /* slightly larger within the viewBox, still contained */
+    font-size: 46px; /* Bebas Neue on mobile — fills nicely, no overflow */
   }
   .hero-bg-text.base-text {
     stroke: rgba(255, 255, 255, 0.12) !important;
@@ -330,31 +330,36 @@ body::before {
 }
 
 .hero-bg-text {
-  font-family: 'JetBrains Mono', 'Inter', sans-serif;
-  font-size: 50px; /* Fits perfectly in 300x100 viewBox */
-  font-weight: 800;
+  font-family: 'Bebas Neue', 'Inter', sans-serif;
+  font-size: 52px;
+  font-weight: 400; /* Bebas Neue is already ultra-bold at 400 */
+  letter-spacing: 0.08em; /* cinematic spread */
   fill: transparent;
   user-select: none;
 }
 
 .hero-bg-text.base-text {
-  stroke: rgba(255, 255, 255, 0.05); /* very faint normally */
+  stroke: rgba(255, 255, 255, 0.06);
+  stroke-width: 0.25;
   transition: opacity 0.3s ease;
 }
 
 .hero-bg-text.animated-text {
-  stroke: rgba(255, 255, 255, 0.2);
+  stroke: rgba(255, 255, 255, 0.18);
+  stroke-width: 0.25;
   stroke-dasharray: 1000;
   stroke-dashoffset: 1000;
-  animation: strokeReveal 2s ease-in-out infinite alternate;
+  animation: strokeReveal 2.5s ease-in-out infinite alternate;
 }
 
 @keyframes strokeReveal {
-  0% { stroke-dashoffset: 1000; }
-  100% { stroke-dashoffset: 0; }
+  0%   { stroke-dashoffset: 1000; opacity: 0.4; }
+  50%  { opacity: 1; }
+  100% { stroke-dashoffset: 0;    opacity: 0.7; }
 }
 
 .hero-bg-text.gradient-text {
+  stroke-width: 0.4; /* slightly bolder for the gradient reveal */
   /* Masked by url(#textMask) */
   opacity: 0; /* Hidden by default until hovered */
   transition: opacity 0.3s ease;
