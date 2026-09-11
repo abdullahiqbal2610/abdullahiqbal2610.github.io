@@ -680,14 +680,30 @@ body::before {
 }
 
 .profile-ring {
-  width: 300px;
-  height: 300px;
+  width: 320px;
+  height: 320px;
   border-radius: 50%;
   background: var(--gradient-primary);
   padding: 5px;
   position: relative;
+  /* overflow: hidden; Removed to allow glow/border to show */
+  box-shadow: 0 0 30px rgba(99, 102, 241, 0.4);
+  animation: ringPulse 4s infinite alternate;
+}
+
+@keyframes ringPulse {
+  0% { box-shadow: 0 0 30px rgba(99, 102, 241, 0.4); }
+  100% { box-shadow: 0 0 60px rgba(99, 102, 241, 0.8), 0 0 100px rgba(99, 102, 241, 0.2); }
+}
+
+.profile-img-wrap {
+  width: 100%;
+  height: 100%;
+  border-radius: 50%;
   overflow: hidden;
-  box-shadow: var(--glow-secondary);
+  position: relative;
+  z-index: 2;
+  background: var(--primary-bg);
 }
 
 .profile-ring::before {
@@ -702,7 +718,7 @@ body::before {
     var(--accent-tertiary),
     var(--accent-primary)
   );
-  animation: rotate 8s linear infinite;
+  animation: rotate 5s linear infinite;
   z-index: -1;
   opacity: 0.8;
 }
@@ -718,8 +734,13 @@ body::before {
 
 .profile-ring img {
   border-radius: 50%;
-  border: 3px solid var(--primary-bg);
-  filter: grayscale(20%) contrast(1.1);
+  border: 4px solid var(--primary-bg);
+  filter: grayscale(10%) contrast(1.1);
+  transition: filter 0.3s ease;
+}
+
+.profile-ring:hover img {
+  filter: grayscale(0%) contrast(1.1);
 }
 
 .about-text h2 {
@@ -983,22 +1004,126 @@ body::before {
   letter-spacing: 0.02em;
 }
 
-/* 6-column grid: 3 cols desktop, 2 tablet, 1 mobile */
-.skills-grid-6 {
+/* ─── Skills: Bento Grid Layout ─────────────────────────────── */
+
+.bento-skills {
   display: grid;
   grid-template-columns: repeat(3, 1fr);
   gap: 1.5rem;
 }
 
+.bento-col-1 {
+  grid-column: span 1;
+}
+
+.bento-col-2 {
+  grid-column: span 2;
+}
+
+/* Decorative Backgrounds for Bento Cards */
+.skill-category {
+  position: relative;
+  z-index: 1;
+  overflow: hidden;
+}
+
+.decorative-num::after {
+  content: attr(data-num);
+  position: absolute;
+  right: -10%;
+  bottom: -20%;
+  font-size: 10rem;
+  font-family: 'Bebas Neue', sans-serif;
+  color: rgba(255, 255, 255, 0.03);
+  font-weight: bold;
+  z-index: -1;
+  line-height: 1;
+  pointer-events: none;
+}
+
+.decorative-bg::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background-image: 
+    linear-gradient(rgba(255, 255, 255, 0.05) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(255, 255, 255, 0.05) 1px, transparent 1px);
+  background-size: 20px 20px;
+  z-index: -1;
+  opacity: 0.3;
+  pointer-events: none;
+}
+
+.decorative-brain::after {
+  content: "";
+  position: absolute;
+  right: -5%;
+  bottom: -20%;
+  width: 150px;
+  height: 150px;
+  background: radial-gradient(circle, var(--accent-primary) 0%, transparent 70%);
+  opacity: 0.1;
+  z-index: -1;
+  pointer-events: none;
+}
+
+.decorative-db::after {
+  content: "";
+  position: absolute;
+  right: 5%;
+  bottom: 10%;
+  width: 60px;
+  height: 60px;
+  border: 4px solid rgba(255, 255, 255, 0.04);
+  border-radius: 50%;
+  z-index: -1;
+  pointer-events: none;
+}
+.decorative-db::before {
+  content: "";
+  position: absolute;
+  right: 15%;
+  bottom: -5%;
+  width: 60px;
+  height: 60px;
+  border: 4px solid rgba(255, 255, 255, 0.04);
+  border-radius: 50%;
+  z-index: -1;
+  pointer-events: none;
+}
+
+.decorative-term::after {
+  content: ">_";
+  position: absolute;
+  right: 5%;
+  bottom: 0%;
+  font-size: 4rem;
+  font-family: monospace;
+  color: rgba(255, 255, 255, 0.04);
+  font-weight: bold;
+  z-index: -1;
+  line-height: 1;
+  pointer-events: none;
+}
+
 @media (max-width: 1024px) {
-  .skills-grid-6 {
+  .bento-skills {
     grid-template-columns: repeat(2, 1fr);
+  }
+  .bento-col-2 {
+    grid-column: span 1; /* Reset on tablet */
+  }
+  .bento-col-2:nth-child(1), .bento-col-2:nth-child(4) {
+    grid-column: span 2; /* Keep some wide on tablet */
   }
 }
 
 @media (max-width: 640px) {
-  .skills-grid-6 {
+  .bento-skills {
     grid-template-columns: 1fr;
+  }
+  .bento-col-2, .bento-col-2:nth-child(1), .bento-col-2:nth-child(4) {
+    grid-column: span 1;
   }
 }
 
@@ -1067,6 +1192,112 @@ body::before {
   background: var(--secondary-bg);
 }
 
+/* ─── Projects: Bento Grid Layout ─────────────────────────────── */
+.bento-projects {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  grid-template-rows: repeat(2, 280px);
+  gap: 1.5rem;
+}
+
+.bento-featured {
+  position: relative;
+  overflow: hidden;
+  border-radius: 20px;
+  background: var(--card-bg);
+  border: 1px solid var(--border-color);
+  transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+}
+
+.bento-featured:hover {
+  transform: translateY(-8px);
+  box-shadow: 0 20px 40px rgba(0, 0, 0, 0.5);
+  border-color: rgba(255, 255, 255, 0.2);
+}
+
+.bento-featured .project-image {
+  position: absolute;
+  inset: 0;
+  height: 100%;
+  width: 100%;
+  z-index: 0;
+  border: none;
+}
+
+.bento-featured .project-image img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  transition: transform 0.6s ease;
+}
+
+.bento-featured:hover .project-image img {
+  transform: scale(1.05);
+}
+
+.bento-featured .project-overlay {
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(to top, rgba(10, 10, 12, 0.95) 0%, rgba(10, 10, 12, 0.7) 40%, transparent 100%);
+  z-index: 1;
+  transition: background 0.4s ease;
+}
+
+.bento-featured:hover .project-overlay {
+  background: linear-gradient(to top, rgba(10, 10, 12, 0.95) 0%, rgba(10, 10, 12, 0.4) 50%, transparent 100%);
+}
+
+.bento-featured .project-content {
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  width: 100%;
+  padding: 2rem;
+  z-index: 2;
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-end;
+}
+
+.bento-featured .project-content p {
+  color: rgba(255, 255, 255, 0.8);
+  font-size: 0.95rem;
+}
+
+.bento-large {
+  grid-column: span 2;
+  grid-row: span 2;
+}
+
+.bento-large .project-content h3 {
+  font-size: 2rem;
+}
+
+.bento-small {
+  grid-column: span 1;
+  grid-row: span 1;
+}
+
+.bento-small .project-content p {
+  display: none; /* Hide text on small cards for cleaner look */
+}
+
+@media (max-width: 1024px) {
+  .bento-projects {
+    grid-template-columns: 1fr;
+    grid-template-rows: auto;
+  }
+  .bento-large, .bento-small {
+    grid-column: span 1;
+    grid-row: span 1;
+    min-height: 400px;
+  }
+  .bento-small .project-content p {
+    display: block; /* Show text on mobile/tablet */
+  }
+}
+
+/* Original compact grid for hidden projects */
 .projects-grid {
   display: grid;
   grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
