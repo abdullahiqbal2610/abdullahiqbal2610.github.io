@@ -226,7 +226,7 @@ document.addEventListener("DOMContentLoaded", () => {
 });
 
 // ===================================
-// Stats Strip — Count-Up Animation
+// Stats Strip — Count-Up Animation (loops every 5s)
 // ===================================
 document.addEventListener("DOMContentLoaded", () => {
   const statItems = document.querySelectorAll(".stat-item");
@@ -241,7 +241,10 @@ document.addEventListener("DOMContentLoaded", () => {
     const numberEl = el.querySelector(".stat-number");
     if (!numberEl) return;
 
-    const duration  = 1800;
+    // Reset to 0 before counting up
+    numberEl.textContent = (0).toFixed(decimals) + suffix;
+
+    const duration  = 1600;
     const startTime = performance.now();
 
     function tick(now) {
@@ -254,18 +257,27 @@ document.addEventListener("DOMContentLoaded", () => {
     requestAnimationFrame(tick);
   }
 
-  let fired = false;
+  function runAllStats() {
+    statItems.forEach((item, i) => {
+      setTimeout(() => {
+        item.classList.add("visible");
+        animateStat(item);
+      }, i * 100);
+    });
+  }
+
+  // Trigger once on scroll into view, then loop every 5s
+  let loopInterval = null;
   const stripObserver = new IntersectionObserver((entries) => {
     entries.forEach(entry => {
-      if (entry.isIntersecting && !fired) {
-        fired = true;
-        statItems.forEach((item, i) => {
-          setTimeout(() => {
-            item.classList.add("visible");
-            animateStat(item);
-          }, i * 100);
-        });
-        stripObserver.disconnect();
+      if (entry.isIntersecting && !loopInterval) {
+        runAllStats();
+        loopInterval = setInterval(runAllStats, 5000);
+      }
+      // Pause when off-screen to save resources
+      if (!entry.isIntersecting && loopInterval) {
+        clearInterval(loopInterval);
+        loopInterval = null;
       }
     });
   }, { threshold: 0.3 });
