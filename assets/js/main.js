@@ -116,17 +116,23 @@ sr.reveal("#contact .btn",            { scale: 0.8,       delay: 600,  reset: fa
 // ===================================
 // Boot Screen & Session Storage
 // ===================================
-window.addEventListener('load', function() {
+document.addEventListener('DOMContentLoaded', function() {
   const bootScreen = document.querySelector('.boot-screen');
-  if (sessionStorage.getItem('bootScreenShown')) {
+  
+  function removeLoading() {
     document.body.classList.remove('loading');
     if (bootScreen) bootScreen.style.display = 'none';
+  }
+
+  if (sessionStorage.getItem('bootScreenShown')) {
+    removeLoading();
   } else {
     sessionStorage.setItem('bootScreenShown', 'true');
-    setTimeout(function() {
-      document.body.classList.remove('loading');
-    }, 4500);
+    setTimeout(removeLoading, 4500);
   }
+  
+  // Safety fallback in case JS hangs
+  setTimeout(removeLoading, 5000);
 });
 
 // ===================================
