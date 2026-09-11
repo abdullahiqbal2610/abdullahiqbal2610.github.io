@@ -1,5 +1,3 @@
-// Keep only these parts:
-
 // ===================================
 // Hamburger Menu Toggle
 // ===================================
@@ -14,7 +12,6 @@ document.addEventListener('DOMContentLoaded', function () {
     btn.setAttribute('aria-expanded', isOpen);
   });
 
-  // Close menu when a nav link is clicked
   nav.querySelectorAll('.nav-link').forEach(link => {
     link.addEventListener('click', () => {
       nav.classList.remove('open');
@@ -23,7 +20,6 @@ document.addEventListener('DOMContentLoaded', function () {
     });
   });
 
-  // Close on Escape key
   document.addEventListener('keydown', e => {
     if (e.key === 'Escape' && nav.classList.contains('open')) {
       nav.classList.remove('open');
@@ -33,7 +29,9 @@ document.addEventListener('DOMContentLoaded', function () {
   });
 });
 
+// ===================================
 // Navbar scroll effect
+// ===================================
 window.addEventListener("scroll", () => {
   const navbar = document.querySelector(".navbar");
   if (window.scrollY > 50) {
@@ -43,7 +41,9 @@ window.addEventListener("scroll", () => {
   }
 });
 
+// ===================================
 // Typewriter Effect
+// ===================================
 const typeText = "Abdullah Iqbal";
 let idx = 0;
 function typeWriter() {
@@ -60,28 +60,26 @@ function typeWriter() {
 }
 document.addEventListener("DOMContentLoaded", typeWriter);
 
-// Skill bars animation
+// ===================================
+// Skill Bars Animation
+// ===================================
 function animateSkillBars() {
-  const skillBars = document.querySelectorAll(".skill-progress");
-  skillBars.forEach((bar) => {
-    const width = bar.getAttribute("data-width");
-    bar.style.width = width + "%";
+  document.querySelectorAll(".skill-progress").forEach((bar) => {
+    bar.style.width = bar.getAttribute("data-width") + "%";
   });
 }
 
-// Trigger skill bars animation when skills section is visible
 const skillsSection = document.getElementById("skills");
 const observer = new IntersectionObserver((entries) => {
   entries.forEach((entry) => {
-    if (entry.isIntersecting) {
-      animateSkillBars();
-    }
+    if (entry.isIntersecting) animateSkillBars();
   });
 });
 observer.observe(skillsSection);
 
-// ScrollReveal setup — reset:false globally so reveals fire ONCE
-// (contact section was disappearing when projects expanded with reset:true)
+// ===================================
+// ScrollReveal Animations
+// ===================================
 const sr = ScrollReveal({
   distance: "40px",
   duration: 800,
@@ -90,56 +88,52 @@ const sr = ScrollReveal({
   mobile: true,
 });
 
-// HERO
 sr.reveal("#hero .hero-content h1", { origin: "bottom", delay: 500 });
-sr.reveal("#hero .hero-content p", { origin: "bottom", delay: 700 });
+sr.reveal("#hero .hero-content p",  { origin: "bottom", delay: 700 });
 sr.reveal("#hero .hero-content .btn", { scale: 0.8, delay: 900 });
 
-// ABOUT
 sr.reveal("#about .profile-ring", { origin: "left", delay: 500 });
-sr.reveal("#about .about-text", { origin: "right", delay: 700 });
+sr.reveal("#about .about-text",   { origin: "right", delay: 700 });
 
-// TIMELINE ITEMS
-// Only reveal items that are visible initially (Experience section)
 document.querySelectorAll(".timeline-section.active .sr-timeline").forEach((el, i) => {
-  sr.reveal(el, {
-    origin: i % 2 === 0 ? "left" : "right",
-    delay: 800 + i * 200,
-  });
+  sr.reveal(el, { origin: i % 2 === 0 ? "left" : "right", delay: 800 + i * 200 });
 });
-
-// Remove ScrollReveal attributes from hidden items to prevent conflicts
 document.querySelectorAll(".timeline-section:not(.active) .sr-timeline").forEach(el => {
   el.classList.remove('sr-timeline');
 });
 
-// SKILLS
-sr.reveal("#skills .section-title", { origin: "top", delay: 500 });
-sr.reveal("#skills .skill-category", { interval: 200, origin: "bottom" });
+sr.reveal("#skills .section-title",   { origin: "top",    delay: 500 });
+sr.reveal("#skills .skill-category",  { interval: 200,    origin: "bottom" });
 
-// PROJECTS
-sr.reveal("#projects .section-title", { origin: "top", delay: 500 });
-sr.reveal("#projects .project-card", { interval: 200, origin: "bottom" });
+sr.reveal("#projects .section-title", { origin: "top",    delay: 500 });
+sr.reveal("#projects .project-card",  { interval: 200,    origin: "bottom" });
 
-// CONTACT — reset:false (once only) so expanding projects can't hide these
-sr.reveal("#contact h2", { origin: "bottom", delay: 300, reset: false });
-sr.reveal("#contact p", { origin: "bottom", delay: 450, reset: false });
+sr.reveal("#contact h2",              { origin: "bottom", delay: 300,  reset: false });
+sr.reveal("#contact p",               { origin: "bottom", delay: 450,  reset: false });
 sr.reveal("#contact .contact-icons li", { interval: 150, origin: "bottom", reset: false });
-sr.reveal("#contact .btn", { scale: 0.8, delay: 600, reset: false });
+sr.reveal("#contact .btn",            { scale: 0.8,       delay: 600,  reset: false });
 
-// Remove loading class after animation completes
+// ===================================
+// Boot Screen & Session Storage
+// ===================================
 window.addEventListener('load', function() {
+  const bootScreen = document.querySelector('.boot-screen');
+  if (sessionStorage.getItem('bootScreenShown')) {
+    document.body.classList.remove('loading');
+    if (bootScreen) bootScreen.style.display = 'none';
+  } else {
+    sessionStorage.setItem('bootScreenShown', 'true');
     setTimeout(function() {
-        document.body.classList.remove('loading');
+      document.body.classList.remove('loading');
     }, 4500);
+  }
 });
-
 
 // ===================================
 // Show More Projects Functionality
 // ===================================
 document.addEventListener('DOMContentLoaded', function() {
-  const showMoreBtn = document.getElementById('show-more-btn');
+  const showMoreBtn   = document.getElementById('show-more-btn');
   const hiddenProjects = document.querySelectorAll('.hidden-project');
   let isExpanded = false;
 
@@ -148,38 +142,18 @@ document.addEventListener('DOMContentLoaded', function() {
       isExpanded = !isExpanded;
 
       if (isExpanded) {
-        // Show hidden projects with staggered animation
         hiddenProjects.forEach((project, index) => {
-          setTimeout(() => {
-            project.classList.add('show');
-          }, index * 150); // 150ms delay between each project
+          setTimeout(() => project.classList.add('show'), index * 150);
         });
-
-        // Update button text and icon
         showMoreBtn.innerHTML = '<i class="fas fa-chevron-up"></i> Show Less Projects';
         showMoreBtn.classList.add('rotated');
-        
-        // Sync ScrollReveal so it recalculates positions for the Contact section
-        setTimeout(() => {
-          if (typeof sr !== 'undefined') sr.sync();
-        }, hiddenProjects.length * 150 + 500);
+        setTimeout(() => { if (typeof sr !== 'undefined') sr.sync(); }, hiddenProjects.length * 150 + 500);
       } else {
-        // Hide projects
-        hiddenProjects.forEach(project => {
-          project.classList.remove('show');
-        });
-
-        // Update button text and icon
+        hiddenProjects.forEach(project => project.classList.remove('show'));
         showMoreBtn.innerHTML = '<i class="fas fa-chevron-down"></i> Show More Projects';
         showMoreBtn.classList.remove('rotated');
-        
         if (typeof sr !== 'undefined') sr.sync();
-
-        // Smooth scroll back to projects section
-        document.getElementById('projects').scrollIntoView({ 
-          behavior: 'smooth', 
-          block: 'start' 
-        });
+        document.getElementById('projects').scrollIntoView({ behavior: 'smooth', block: 'start' });
       }
     });
   }
@@ -189,53 +163,37 @@ document.addEventListener('DOMContentLoaded', function() {
 // Tab Switching Logic (Experience / Education)
 // ===================================
 document.addEventListener('DOMContentLoaded', function() {
-    const tabBtns = document.querySelectorAll('.tab-btn');
-    const timelineSections = document.querySelectorAll('.timeline-section');
-  
-    if (tabBtns.length > 0) {
-      tabBtns.forEach(btn => {
-        btn.addEventListener('click', () => {
-          // 1. Remove active class from all buttons
-          tabBtns.forEach(b => b.classList.remove('active'));
-          // 2. Add active class to clicked button
-          btn.classList.add('active');
-  
-          // 3. Hide all sections
-          timelineSections.forEach(section => {
-            section.classList.remove('active');
-            section.style.display = 'none'; 
-          });
-  
-          // 4. Show target section
-          const targetId = btn.getAttribute('data-target');
-          const targetSection = document.getElementById(targetId);
-          if (targetSection) {
-            targetSection.style.display = 'block'; 
-            
-            // Trigger section animation
-            requestAnimationFrame(() => {
-                targetSection.classList.add('active');
-            });
+  const tabBtns         = document.querySelectorAll('.tab-btn');
+  const timelineSections = document.querySelectorAll('.timeline-section');
 
-            // Animate internal items
-            const items = targetSection.querySelectorAll('.timeline-item');
-            items.forEach((item, index) => {
-                // CRITICAL: Nuke all ScrollReveal inline styles
-                item.removeAttribute('style');
-                item.style.visibility = 'visible'; // Force visibility
-                item.style.opacity = '0'; // Start hidden for animation
-                
-                // Force reflow
-                void item.offsetWidth;
-                
-                // Add our custom CSS animation
-                item.style.animation = `fadeInUp 0.5s ease-out forwards ${index * 0.15}s`;
-            });
-          }
+  if (tabBtns.length > 0) {
+    tabBtns.forEach(btn => {
+      btn.addEventListener('click', () => {
+        tabBtns.forEach(b => b.classList.remove('active'));
+        btn.classList.add('active');
+
+        timelineSections.forEach(section => {
+          section.classList.remove('active');
+          section.style.display = 'none';
         });
+
+        const targetSection = document.getElementById(btn.getAttribute('data-target'));
+        if (targetSection) {
+          targetSection.style.display = 'block';
+          requestAnimationFrame(() => targetSection.classList.add('active'));
+
+          targetSection.querySelectorAll('.timeline-item').forEach((item, index) => {
+            item.removeAttribute('style');
+            item.style.visibility = 'visible';
+            item.style.opacity    = '0';
+            void item.offsetWidth;
+            item.style.animation  = `fadeInUp 0.5s ease-out forwards ${index * 0.15}s`;
+          });
+        }
       });
-    }
-  });
+    });
+  }
+});
 
 // ===================================
 // Spotlight Effect for Skill Cards
@@ -243,11 +201,8 @@ document.addEventListener('DOMContentLoaded', function() {
 document.querySelectorAll(".skill-category").forEach((card) => {
   card.addEventListener("mousemove", (e) => {
     const rect = card.getBoundingClientRect();
-    const x = e.clientX - rect.left;
-    const y = e.clientY - rect.top;
-
-    card.style.setProperty("--mouse-x", `${x}px`);
-    card.style.setProperty("--mouse-y", `${y}px`);
+    card.style.setProperty("--mouse-x", `${e.clientX - rect.left}px`);
+    card.style.setProperty("--mouse-y", `${e.clientY - rect.top}px`);
   });
 });
 
@@ -255,26 +210,66 @@ document.querySelectorAll(".skill-category").forEach((card) => {
 // Aceternity Text Hover Effect (Vanilla Port)
 // ===================================
 document.addEventListener("DOMContentLoaded", () => {
-  const heroSection = document.getElementById("hero");
-  const revealMask = document.getElementById("revealMask");
+  const heroSection  = document.getElementById("hero");
+  const revealMask   = document.getElementById("revealMask");
   const gradientText = document.querySelector(".gradient-text");
-  
+
   if (heroSection && revealMask && gradientText) {
     heroSection.addEventListener("mousemove", (e) => {
       const rect = heroSection.getBoundingClientRect();
-      const x = ((e.clientX - rect.left) / rect.width) * 100;
-      const y = ((e.clientY - rect.top) / rect.height) * 100;
-      
-      revealMask.setAttribute("cx", `${x}%`);
-      revealMask.setAttribute("cy", `${y}%`);
+      revealMask.setAttribute("cx", `${((e.clientX - rect.left) / rect.width)  * 100}%`);
+      revealMask.setAttribute("cy", `${((e.clientY - rect.top)  / rect.height) * 100}%`);
     });
-
-    heroSection.addEventListener("mouseenter", () => {
-      gradientText.style.opacity = "1";
-    });
-
-    heroSection.addEventListener("mouseleave", () => {
-      gradientText.style.opacity = "0";
-    });
+    heroSection.addEventListener("mouseenter", () => { gradientText.style.opacity = "1"; });
+    heroSection.addEventListener("mouseleave", () => { gradientText.style.opacity = "0"; });
   }
+});
+
+// ===================================
+// Stats Strip — Count-Up Animation
+// ===================================
+document.addEventListener("DOMContentLoaded", () => {
+  const statItems = document.querySelectorAll(".stat-item");
+  if (!statItems.length) return;
+
+  function easeOutCubic(t) { return 1 - Math.pow(1 - t, 3); }
+
+  function animateStat(el) {
+    const target   = parseFloat(el.dataset.target);
+    const decimals = parseInt(el.dataset.decimals ?? "0", 10);
+    const suffix   = el.dataset.suffix ?? "";
+    const numberEl = el.querySelector(".stat-number");
+    if (!numberEl) return;
+
+    const duration  = 1800;
+    const startTime = performance.now();
+
+    function tick(now) {
+      const progress = Math.min((now - startTime) / duration, 1);
+      const current  = easeOutCubic(progress) * target;
+      numberEl.textContent = current.toFixed(decimals) + suffix;
+      if (progress < 1) requestAnimationFrame(tick);
+      else numberEl.textContent = target.toFixed(decimals) + suffix;
+    }
+    requestAnimationFrame(tick);
+  }
+
+  let fired = false;
+  const stripObserver = new IntersectionObserver((entries) => {
+    entries.forEach(entry => {
+      if (entry.isIntersecting && !fired) {
+        fired = true;
+        statItems.forEach((item, i) => {
+          setTimeout(() => {
+            item.classList.add("visible");
+            animateStat(item);
+          }, i * 100);
+        });
+        stripObserver.disconnect();
+      }
+    });
+  }, { threshold: 0.3 });
+
+  const strip = document.getElementById("stats-strip");
+  if (strip) stripObserver.observe(strip);
 });
